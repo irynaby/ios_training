@@ -1,4 +1,4 @@
-ios_training
+ios_trainig
 ===========
 
-This rep for the IOS training
+This rep for the IOStrainig
