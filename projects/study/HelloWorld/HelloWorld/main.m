@@ -1,8 +1,8 @@
 //
 //  main.m
-//  study
+//  HelloWorld
 //
-//  Created by Admin on 14/03/2014.
+//  Created by Admin on 17/03/2014.
 //  Copyright (c) 2014 ___FULLUSERNAME___. All rights reserved.
 //
 
@@ -13,7 +13,6 @@
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        NSLog(@"Hello World!");        
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
-    return 0;
 }
