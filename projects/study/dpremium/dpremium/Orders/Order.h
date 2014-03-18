@@ -7,7 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Customer.h"
 
-@interface Order : NSObject
+@interface Order : Customer {
+}
 
+@property NSInteger numOrder;
+@property NSDate * dateOrder;
+@property NSInteger userId;
+
+//Methods
+- (id) initOrder;
+- (void) doNumOrder : (NSInteger) numOrder
+        andDate : (NSDate *) dateOrder
+        andUser : (NSInteger) userId;
+- (void) deleteOrderByNumOrder : (NSInteger) numOrder;
 @end
