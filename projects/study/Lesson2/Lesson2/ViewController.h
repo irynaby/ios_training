@@ -10,4 +10,9 @@
 
 @interface ViewController : UIViewController
 
+@property(retain) IBOutlet UIButton *bn1;
+@property(retain) IBOutlet UILabel *lab1;
+
+-(IBAction) bnPressed:(id)sender;
+
 @end

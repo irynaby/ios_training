@@ -7,6 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "Users/User.h"
+#import "Customers/Customer.h"
+#import "Orders/Order.h"
+#import "Categories/Categories.h"
+#import "Products/Products.h"
 
 @implementation AppDelegate
 
@@ -16,6 +21,38 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    //Cummon
+    NSDateFormatter *format = [[NSDateFormatter alloc]init];
+    
+    //Users
+    User* user = [[User alloc]init];
+    
+    [user initUser];
+    
+    [user userWithName:@"Spirit" andAddress:@"Ivanovo 23" andBirthDate:[format dateFromString:@"02.03.2000"] andUserId:3];
+    [user userWithName:@"Vasya" andAddress:@"Lubimova 23" andBirthDate:[format dateFromString:@"04.05.2002"] andUserId:1];
+    
+    [user deleteUserById: 1];
+    
+    //Customers
+    Customer* customer = [[Customer alloc]init];
+    
+    [customer initCustomer];
+    
+    [customer customerWithUserId: 3 andCustomerId: 2 andShippingAddress:@"Gromova 23" andCustomerPhone:1234567];
+    [customer customerWithUserId: 3 andCustomerId: 1 andShippingAddress:@"Pobedy 23" andCustomerPhone:1238567];
+    
+    [customer deleteCustomerById: 1];
+    
+    //Orders
+    Order* order = [[Order alloc]init];
+    
+    [order doNumOrder:132 andDate: [NSDate date] andUser:3];
+    [order doNumOrder:123 andDate: [NSDate date] andUser:3];
+    
+    [order deleteOrderByNumOrder:132];
+    
     return YES;
 }
 

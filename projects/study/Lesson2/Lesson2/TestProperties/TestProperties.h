@@ -8,6 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TestProperties : NSObject
+@interface TestProperties : NSObject{
+    NSArray * _productTypes;
+    //NSArray * newProductTypes;
+    NSMutableArray *_mutProductTypes;    
+}
+
+@property (retain,nonatomic) NSArray * productTypes;
+@property (retain,nonatomic) NSMutableArray * mutProductTypes;
+
+-(void) createProductsTypes;
+-(NSArray *) productTypes;
+- (NSMutableArray *) mutProductTypes;
+-(void) setProductTypes:(NSArray *)productTypes;
 
 @end

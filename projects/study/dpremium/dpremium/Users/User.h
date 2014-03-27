@@ -22,6 +22,6 @@
 
 - (void) userWithName : (NSString *) userName
            andAddress : (NSString *) userAddress
-           andBirthDate : (NSString *) userBirthDate
+           andBirthDate : (NSDate *) userBirthDate
            andUserId : (NSInteger) userId;
 @end

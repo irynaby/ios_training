@@ -445,6 +445,7 @@
 				843B392D18D3546B003C5107 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		843B392E18D3546B003C5107 /* Build configuration list for PBXNativeTarget "studyTests" */ = {
 			isa = XCConfigurationList;
@@ -453,6 +454,7 @@
 				843B393018D3546B003C5107 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

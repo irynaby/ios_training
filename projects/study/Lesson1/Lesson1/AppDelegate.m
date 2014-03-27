@@ -7,11 +7,27 @@
 //
 
 #import "AppDelegate.h"
+#import "Person.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    Person *pers = [Person personWithFirstName:@"" lastName: @""];
+    if (pers) {
+     //   self.firstName = @"Name";
+     //   if(self){
+        //Maybe some othe impl
+       // }
+        [pers saySimpleHello];
+    }
+    
+    Person *pers1 = [Person new];
+    Person *pers2 = [[Person alloc]init];
+    Person *pers3 = [[Person alloc] initWithFirstName:@"John"];
+    
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];

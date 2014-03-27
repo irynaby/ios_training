@@ -19,6 +19,7 @@
 		849728C618D70570008789FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849728AE18D70570008789FB /* UIKit.framework */; };
 		849728CE18D70570008789FB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 849728CC18D70570008789FB /* InfoPlist.strings */; };
 		849728D018D70570008789FB /* Lesson1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 849728CF18D70570008789FB /* Lesson1Tests.m */; };
+		849728DC18D70623008789FB /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 849728DB18D70623008789FB /* Person.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 		849728CB18D70570008789FB /* Lesson1Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lesson1Tests-Info.plist"; sourceTree = "<group>"; };
 		849728CD18D70570008789FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		849728CF18D70570008789FB /* Lesson1Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lesson1Tests.m; sourceTree = "<group>"; };
+		849728DA18D70623008789FB /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		849728DB18D70623008789FB /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,7 @@
 		849728B018D70570008789FB /* Lesson1 */ = {
 			isa = PBXGroup;
 			children = (
+				849728D918D70594008789FB /* MyClass */,
 				849728B918D70570008789FB /* AppDelegate.h */,
 				849728BA18D70570008789FB /* AppDelegate.m */,
 				849728BC18D70570008789FB /* Images.xcassets */,
@@ -142,6 +146,15 @@
 				849728CC18D70570008789FB /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		849728D918D70594008789FB /* MyClass */ = {
+			isa = PBXGroup;
+			children = (
+				849728DA18D70623008789FB /* Person.h */,
+				849728DB18D70623008789FB /* Person.m */,
+			);
+			name = MyClass;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				849728DC18D70623008789FB /* Person.m in Sources */,
 				849728BB18D70570008789FB /* AppDelegate.m in Sources */,
 				849728B718D70570008789FB /* main.m in Sources */,
 			);

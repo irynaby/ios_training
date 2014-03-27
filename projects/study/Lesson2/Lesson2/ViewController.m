@@ -14,6 +14,9 @@
 
 @implementation ViewController
 
+@synthesize lab1;
+@synthesize bn1;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -23,8 +26,14 @@
     return self;
 }
 
+-(IBAction) bnPressed:(id)sender{
+    lab1.text = @"bla bla";
+}
+
 - (void)viewDidLoad
 {
+    
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

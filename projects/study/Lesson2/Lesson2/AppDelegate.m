@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "TestProperties/TestProperties.h"
+#import "ViewController.h"
 
 @implementation AppDelegate
 
@@ -16,6 +18,13 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    self.window.rootViewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+    
+    /*TestProperties* t = [[TestProperties alloc] init];
+    [t createProductsTypes];
+    [t productTypes];
+    [t mutProductTypes];*/
+        
     return YES;
 }
 

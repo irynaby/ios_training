@@ -21,7 +21,7 @@
 -(id) initCustomer;
 -(void) deleteCustomerById : (NSInteger) customerId;
 -(void) customerWithUserId : (NSInteger) userId
-           andCustomerIs : (NSInteger) customerId
+           andCustomerId : (NSInteger) customerId
            andShippingAddress : (NSString *) shippingAddress
            andCustomerPhone : (NSInteger) customerPhone;
 
