@@ -46,12 +46,18 @@
     [customer deleteCustomerById: 1];
     
     //Orders
-    Order* order = [[Order alloc]init];
+    Order* order = [[Order alloc] init];
     
     [order doNumOrder:132 andDate: [NSDate date] andUser:3];
     [order doNumOrder:123 andDate: [NSDate date] andUser:3];
     
     [order deleteOrderByNumOrder:132];
+    
+    //Products
+    Products * products = [[Products alloc] init];
+    [products createProductsTypes];
+    [products productTypes];
+    [products mutProductTypes];
     
     return YES;
 }
