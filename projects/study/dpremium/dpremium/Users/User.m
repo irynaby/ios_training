@@ -15,17 +15,17 @@
 @synthesize userAddress = _userAddressVar;
 @synthesize userBirthDate = _userBirthDateVar;
 
-//- (id)initUser {
-//    self = [super init];
-//    if (self) {
-//        _userIdVar = 1;
-//        _userNameVar = [@"Vasya Pushkin" retain];
-//        _userAddressVar = [[NSString alloc] initWithString:@"Madrid, ave. Red, 12"];
-//        _userBirthDateVar = [@"2000-12-12" retain];
-//    }
-//
-//    return self;
-//}
+- (id)initUser {
+    self = [super init];
+    if (self) {
+        _userIdVar = 1;
+        _userNameVar = [@"Vasya Pushkin" retain];
+        _userAddressVar = [[NSString alloc] initWithString:@"Madrid, ave. Red, 12"];
+        _userBirthDateVar = [@"2000-12-12" retain];
+    }
+
+    return self;
+}
 
 - (id) initWithName : (NSString *) userName
            andAddress : (NSString *) userAddress

@@ -22,11 +22,13 @@
     NSLog(@"Product with id %d remove", pid);
 }
 
-//-(Product*) findProductById:(NSInteger)pid {
-
+-(Product*) findProductById:(NSInteger)pid {
+    for (id eachObject in ) {
+        <#statements#>
+    }
    //NSLog(@"product %@ with id %ld", pname, pid);
     //return pname;
-//}
+}
 
 +(NSArray *)createTestCategories{
     NSArray *names = [NSArray arrayWithObjects:@"Books",@"Clothes",@"Cars",@"Furniture",@"Toys",nil ];
@@ -43,7 +45,7 @@
 }
 
 -(void) createTestCategoryProducts{
-    for (int i =0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
         Product *product = [[Product alloc] init];
         product.productName = [NSString stringWithFormat:@"Category %@ Product %d", self.categoryName,  i];
         [self addProduct:product];

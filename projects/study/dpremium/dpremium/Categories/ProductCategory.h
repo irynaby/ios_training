@@ -20,7 +20,7 @@
 
 -(void) addProduct:(Product *)product;
 -(void) removeProductWithId:(NSInteger)pid;
-//-(Product*) findProductById:(NSInteger)pid;
+-(Product*) findProductById:(NSInteger)pid;
 
 +(ProductCategory *) categoryWithName:(NSString *)name;
 
