@@ -7,11 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "Users/User.h"
-#import "Customers/Customer.h"
-#import "Orders/Order.h"
-#import "Categories/Categories.h"
-#import "Products/Products.h"
+#import "User.h"
+#import "Customer.h"
+#import "Order.h"
+#import "ProductCategory.h"
+#import "Product.h"
 
 @implementation AppDelegate
 
@@ -22,11 +22,33 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    //Cummon
+    //=====Category
+    NSMutableArray *arr = [ProductCategory createTestCategories];
+    for (ProductCategory *cat in arr) {
+        [cat createTestCategoryProducts];
+    }
+    
+    //Create new category
+    ProductCategory *newCategor = [[ProductCategory alloc] init];
+    newCategor.categoryName = @"NewCategory";
+    [arr addObject:newCategor];
+    [newCategor release];
+    
+    //Update categoryName for 1
+    ProductCategory *clothsCategory = [arr objectAtIndex:1];
+    clothsCategory.categoryName = @"Cloths new";
+    
+    //Added new product
+    Product *newClothsProduct = [[Product alloc] init];
+    newClothsProduct.productName = @"Dress";
+    
+    [clothsCategory addProduct:newClothsProduct];
+                            
+    //=====Cummon
     NSDateFormatter *format = [[NSDateFormatter alloc]init];
     
+    //=====Users
     User* user3 = nil;
-    //Users
     @autoreleasepool {
         User* user = [[User alloc] initUser];
         User* user2 = [[User alloc] initWithName:@"Spirit" andAddress:@"Ivanovo 23" andBirthDate:[format  dateFromString:@"02.03.2000"] andUserId:1];
@@ -46,32 +68,60 @@
     user3 = nil;
     
     
-    //Customers
-    Customer * customer = [[Customer alloc] initCustomer];
-    Customer * customer2 = [[Customer alloc] initWithUserId:1 andCustomerId:1 andShippingAddress:@"Gromova 16" andCustomerPhone:1234567];
-    //Customer* customer3 = [[Customer alloc] initWithName:@"Drozdova 94" andAddress:<#(NSString *)#> andBirthDate:<#(NSDate *)#> andUserId:4];
     
+    //=====Customers
+    Customer * customer2 = nil;
+    Customer * customer3 = nil;
+    @autoreleasepool {
+       customer2 = [[Customer alloc] initWithUserId:1 andCustomerId:1 andShippingAddress:@"Gromova 16" andCustomerPhone:1234567];
+       customer3 = [[Customer alloc] initWithUserId:1 andCustomerId:3 andShippingAddress:@"Gromova 32" andCustomerPhone:7634567];
+    }
     
     [Customer init];
     
-    [Customer customerWithUserId: 1 andCustomerId: 2 andShippingAddress:@"Gromova 23" andCustomerPhone:1234567];
-    [Customer customerWithUserId: 3 andCustomerId: 1 andShippingAddress:@"Pobedy 23" andCustomerPhone:1238567];
+    //[Customer customerWithUserId: 1 andCustomerId: 2 andShippingAddress:@"Gromova 23" andCustomerPhone:1234567];
+    //[Customer customerWithUserId: 3 andCustomerId: 1 andShippingAddress:@"Pobedy 23" andCustomerPhone:1238567];
     
     [Customer deleteCustomerById: 1];
     
-    //Orders
-    Order* order = [[Order alloc] init];
+    [customer2 release];
+    customer2 = nil;
     
-    [order doNumOrder:132 andDate: [NSDate date] andUser:3];
-    [order doNumOrder:123 andDate: [NSDate date] andUser:3];
+    [customer3 release];
+    customer3 = nil;
     
-    [order deleteOrderByNumOrder:132];
+    //=====Orders
+    /*Order *order1 = nil;
+    @autoreleasepool {
+        order1 = [[Order alloc] initOrder];
+    }
+        Order* order = [[Order alloc] init];
     
+       [Order doNumOrder:132 andDate: [NSDate date] andUser:3 andProductId:1];
+       [Order doNumOrder:123 andDate: [NSDate date] andUser:3 andProductId:1];
+    
+    [Order deleteOrderByNumOrder:132];
+    
+    [order1 release];
+     order1 = nil;
+    */
     //Products
-    Products * products = [[Products alloc] init];
-    [products createProductsTypes];
-    [products productTypes];
-    [products mutProductTypes];
+    //Products * products = [[Products alloc] init];
+    //[products createProductsTypes];
+    //[products productTypes];
+    //[products mutProductTypes];
+    ProductCategory *category1 = [[ProductCategory alloc] init];
+    
+    Product *prod1 = [Product productWithId:1 andName:@"Ked"];
+    prod1.productCategory = category1;
+    [category1 addProduct:prod1];
+    
+    Product *prod2 = [category1 findProductById:1];
+
+    //Category
+
+    //Categories * categories = [[Categories alloc]init];
+    //[categories categoryProducts];
     
     return YES;
 }

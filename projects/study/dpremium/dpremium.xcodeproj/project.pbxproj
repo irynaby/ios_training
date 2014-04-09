@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		84046C7618D8751B003B998B /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046C7518D8751B003B998B /* Categories.m */; };
-		84046C7A18D876AF003B998B /* Products.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046C7918D876AF003B998B /* Products.m */; };
+		84046C7618D8751B003B998B /* ProductCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046C7518D8751B003B998B /* ProductCategory.m */; };
+		84046C7A18D876AF003B998B /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046C7918D876AF003B998B /* Product.m */; };
 		849728EA18D822F1008789FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849728E918D822F1008789FB /* Foundation.framework */; };
 		849728EC18D822F1008789FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849728EB18D822F1008789FB /* CoreGraphics.framework */; };
 		849728EE18D822F1008789FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849728ED18D822F1008789FB /* UIKit.framework */; };
@@ -37,10 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		84046C7418D8751B003B998B /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
-		84046C7518D8751B003B998B /* Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Categories.m; sourceTree = "<group>"; };
-		84046C7818D876AF003B998B /* Products.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Products.h; sourceTree = "<group>"; };
-		84046C7918D876AF003B998B /* Products.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Products.m; sourceTree = "<group>"; };
+		84046C7418D8751B003B998B /* ProductCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCategory.h; sourceTree = "<group>"; };
+		84046C7518D8751B003B998B /* ProductCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCategory.m; sourceTree = "<group>"; };
+		84046C7818D876AF003B998B /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
+		84046C7918D876AF003B998B /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
 		849728E618D822F1008789FB /* dpremium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dpremium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849728E918D822F1008789FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		849728EB18D822F1008789FB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -92,8 +92,8 @@
 		84046C7318D874E2003B998B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				84046C7418D8751B003B998B /* Categories.h */,
-				84046C7518D8751B003B998B /* Categories.m */,
+				84046C7418D8751B003B998B /* ProductCategory.h */,
+				84046C7518D8751B003B998B /* ProductCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -101,8 +101,8 @@
 		84046C7718D87682003B998B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84046C7818D876AF003B998B /* Products.h */,
-				84046C7918D876AF003B998B /* Products.m */,
+				84046C7818D876AF003B998B /* Product.h */,
+				84046C7918D876AF003B998B /* Product.m */,
 			);
 			path = Products;
 			sourceTree = "<group>";
@@ -304,9 +304,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84046C7A18D876AF003B998B /* Products.m in Sources */,
+				84046C7A18D876AF003B998B /* Product.m in Sources */,
 				849728FA18D822F1008789FB /* AppDelegate.m in Sources */,
-				84046C7618D8751B003B998B /* Categories.m in Sources */,
+				84046C7618D8751B003B998B /* ProductCategory.m in Sources */,
 				849728F618D822F1008789FB /* main.m in Sources */,
 				8497291F18D82654008789FB /* Order.m in Sources */,
 				8497291B18D823F4008789FB /* User.m in Sources */,

@@ -27,8 +27,8 @@
     return self;
 }
 
--(void) deleteCustomerById : (NSInteger) customerId {
-    NSLog(@"Customer with id %ld had been deleted",_customerIdVar);
++(void) deleteCustomerById : (NSInteger) customerId {
+    NSLog(@"Customer with id %d had been deleted",customerId);
 }
 
 -(id) initWithUserId : (NSInteger) userId
@@ -44,7 +44,7 @@
         _customerPhoneVar = customerPhone;
     }
 
-    NSLog(@"Customer with id = %ld :\n Shipping Address: %@ \n Phone: %ld \n", _customerIdVar, _shippingAddressVar, _customerPhoneVar );
+    NSLog(@"Customer with id = %d :\n Shipping Address: %@ \n Phone: %d \n", _customerIdVar, _shippingAddressVar, _customerPhoneVar );
     return self;
 }
 
@@ -60,9 +60,9 @@
 
 -(void) dealloc{
     //release your variables
-    [_customerIdVar release];
+    //_customerIdVar release];
     [_shippingAddressVar release];
-    [_customerPhoneVar release];
+    //[_customerPhoneVar release];
     [super dealloc];
 }
 

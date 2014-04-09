@@ -8,18 +8,23 @@
 
 #import <Foundation/Foundation.h>
 #import "Customer.h"
+@class Product;
+@class Customer;
 
-@interface Order : Customer {
+@interface Order : NSObject {
 }
 
 @property NSInteger numOrder;
 @property NSDate * dateOrder;
 @property NSInteger userId;
+@property NSInteger productId;
 
 //Methods
 - (id) initOrder;
-- (void) doNumOrder : (NSInteger) numOrder
++ (void) doNumOrder : (NSInteger) numOrder
         andDate : (NSDate *) dateOrder
-        andUser : (NSInteger) userId;
-- (void) deleteOrderByNumOrder : (NSInteger) numOrder;
+        andUser : (NSInteger) userId
+        andProductId: (NSInteger) productId;
++ (void) deleteOrderByNumOrder : (NSInteger) numOrder;
+- (void) processOrder;
 @end

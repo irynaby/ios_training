@@ -18,9 +18,9 @@
 
 //Methods
 
-- (id)initUser ;
+//- (id)initUser ;
 
-- (void) deleteUserById : (NSInteger) userId;
++ (void) deleteUserById : (NSInteger) userId;
 
 - (id) initWithName : (NSString *) userName
            andAddress : (NSString *) userAddress

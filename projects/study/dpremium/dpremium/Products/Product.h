@@ -7,20 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-@class Categories;
+@class ProductCategory;
 
-@interface Products : NSObject{
-    NSArray * _productTypes;
-    NSMutableArray *_mutProductTypes;
+@interface Product : NSObject{
+    NSInteger _pidVar;
+    NSString *_pnameVar;
 }
 
-@property (retain,nonatomic) NSArray * productTypes;
-@property (assign,nonatomic) Categories * productCategory;
-@property (retain,nonatomic) NSMutableArray * mutProductTypes;
+@property (assign,nonatomic) NSInteger productId;
+@property (copy,nonatomic) NSString *productName;
+//@property (assign,nonatomic, getter = getProductCategory, setter = setProductCategory) ProductCategory * productCategory;
+@property (assign,nonatomic) ProductCategory * productCategory;
 
--(void) createProductsTypes;
--(NSArray *) productTypes;
-- (NSMutableArray *) mutProductTypes;
--(void) setProductTypes:(NSArray *)productTypes;
+-(id) initWithId:(NSInteger)pid andName:(NSString *)pname;
++(Product*)productWithId:(NSInteger)pid andName:(NSString*)pname;
 
 @end

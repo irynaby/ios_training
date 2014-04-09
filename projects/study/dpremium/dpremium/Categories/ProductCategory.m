@@ -6,46 +6,60 @@
 //  Copyright (c) 2014 Admin. All rights reserved.
 //
 
-#import "Categories.h"
+#import "ProductCategory.h"
 
-@implementation Categories
+@implementation ProductCategory
 
 @synthesize categoryProducts = _categoryProductsVar;
 
--(void) addProduct:(Products *)product{
-    //add to arry
+
+-(void) addProduct:(Product *)product{
     product.productCategory = self;
+    NSLog(@"Product %@ had been added",product.productCategory);
 }
 
+-(void) removeProductWithId:(NSInteger)pid{
+    NSLog(@"Product with id %d remove", pid);
+}
 
--(NSArray*) categoryProducts{
-    if([_categoryProductsVar count] > 0) {
-        int i = 0;
-        for( id eachObject in _categoryProductsVar){
-        	NSLog(@"[%i] %@ ", i, eachObject);
-            i++;
-        }
+//-(Product*) findProductById:(NSInteger)pid {
+
+   //NSLog(@"product %@ with id %ld", pname, pid);
+    //return pname;
+//}
+
++(NSArray *)createTestCategories{
+    NSArray *names = [NSArray arrayWithObjects:@"Books",@"Clothes",@"Cars",@"Furniture",@"Toys",nil ];
+    
+    NSMutableArray *retVal = [NSMutableArray array];
+    for (int i =0; i<[names count]; i++) {
+        ProductCategory *category = [[ProductCategory alloc] init];
+        category.categoryName = [names objectAtIndex:i];
+        [retVal addObject:category];
+        [category release];
     }
     
-    return _categoryProductsVar;
-
+    return retVal;
 }
 
--(void) createCategoryProducts {
-    _categoryProductsVar = [[NSArray alloc] initWithObjects:
-                     @"Books", @"Health", @"Cell Phones",
-                     @"Electronics", @"Home", @"Sports, Fitness & Outdoors",
-                     @"Office", nil];
-    
-    //NSLog(@"%@", _categoryProduct);
-}
-
-
--(Products*) findProductById:(NSInteger)pid{
-    for (<#initialization#>; <#condition#>; <#increment#>) {
-        <#statements#>
+-(void) createTestCategoryProducts{
+    for (int i =0; i<10; i++) {
+        Product *product = [[Product alloc] init];
+        product.productName = [NSString stringWithFormat:@"Category %@ Product %d", self.categoryName,  i];
+        [self addProduct:product];
+        [product release];
     }
 }
 
++(ProductCategory *) categoryWithName:(NSString *)name{
+    return [[[ProductCategory alloc] init] autorelease];
+}
+
+-(void) dealloc {
+    [_categoryProductsVar release];
+    _categoryProductsVar = nil;
+    
+    [super dealloc];
+}
 
 @end

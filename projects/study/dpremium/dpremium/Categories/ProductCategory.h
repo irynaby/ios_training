@@ -7,16 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Products.h"
+#import "Product.h"
 
-@interface Categories : NSObject {
-    NSArray * _categoryProducts;
+@interface ProductCategory : NSObject {
+    
 }
 
-@property (retain,nonatomic) NSArray * productTypes;
+@property (retain,nonatomic) NSNumber * categoryID;
+@property (retain,nonatomic) NSString * categoryName;
 
--(void) addProduct:(Products *)product;
--(NSArray*) categoryProducts;
--(Products*) findProductById:(NSInteger)pid;
+@property (retain,nonatomic) NSArray * categoryProducts;
 
+-(void) addProduct:(Product *)product;
+-(void) removeProductWithId:(NSInteger)pid;
+//-(Product*) findProductById:(NSInteger)pid;
+
++(ProductCategory *) categoryWithName:(NSString *)name;
+
++(NSMutableArray *)createTestCategories;
+-(void) createTestCategoryProducts;
 @end

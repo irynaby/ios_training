@@ -15,17 +15,17 @@
 @synthesize userAddress = _userAddressVar;
 @synthesize userBirthDate = _userBirthDateVar;
 
-- (id)initUser {
-    self = [super init];
-    if (self) {
-        _userIdVar = 1;
-        _userNameVar = [@"Vasya Pushkin" retain];
-        _userAddressVar = [[NSString alloc] initWithString:@"Madrid, ave. Red, 12"];
-        _userBirthDateVar = [@"2000-12-12" retain];
-    }
-    
-    return self;
-}
+//- (id)initUser {
+//    self = [super init];
+//    if (self) {
+//        _userIdVar = 1;
+//        _userNameVar = [@"Vasya Pushkin" retain];
+//        _userAddressVar = [[NSString alloc] initWithString:@"Madrid, ave. Red, 12"];
+//        _userBirthDateVar = [@"2000-12-12" retain];
+//    }
+//
+//    return self;
+//}
 
 - (id) initWithName : (NSString *) userName
            andAddress : (NSString *) userAddress
@@ -39,7 +39,7 @@
         _userAddressVar = userAddress;
         _userBirthDateVar = userBirthDate;
     }
-    NSLog(@" %@ with id = %ld :\n Address: %@ \n BirthDate: %@ \n", self.userName, self.userId, _userAddressVar, _userBirthDateVar);
+    NSLog(@" %@ with id = %d :\n Address: %@ \n BirthDate: %@ \n", self.userName, self.userId, _userAddressVar, _userBirthDateVar);
     return self;
     
 }
@@ -54,8 +54,8 @@
 }
 
 
-- (void) deleteUserById : (NSInteger) userId {
-    NSLog(@"User with id %ld had been deleted!", _userIdVar);
++ (void) deleteUserById : (NSInteger) userId {
+    NSLog(@"User with id %d had been deleted!", userId);
 }
 
 -(void) dealloc{

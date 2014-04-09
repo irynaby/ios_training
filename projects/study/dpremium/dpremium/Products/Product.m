@@ -6,65 +6,41 @@
 //  Copyright (c) 2014 Admin. All rights reserved.
 //
 
-#import "Products.h"
+#import "Product.h"
+#import "ProductCategory.h"
 
-@implementation Products{}
+@implementation Product
 
-@synthesize productTypes = _productTypes;
-//@synthesize newProductTypes = _newProductTypes;
-@synthesize mutProductTypes = _mutProductTypes;
+/*@dynamic productCategory;
 
-
--(void) createProductsTypes {
-    _productTypes = [[NSArray alloc] initWithObjects:
-                     @"Books", @"Health", @"Cell Phones",
-                     @"Electronics", @"Home", @"Sports, Fitness & Outdoors",
-                     @"Office", nil];
+-(ProductCategory *)getProductCategory{
     
-    //NSLog(@"%@", _productTypes);
-    
-    NSMutableArray * mutProductTypes = [NSMutableArray arrayWithArray:_productTypes];
 }
 
-- (NSArray *) productTypes {
-    if([_productTypes count] > 0) {
-        int i = 0;
-        for( id eachObject in _productTypes){
-        	NSLog(@"[%i] %@ ", i, eachObject);
-            i++;
-        }
+-(void)setProductCategory:(ProductCategory*)category{
+    _productCategory = category;
+    [category addProduct:self];
+}*/
+
+
+-(id) initWithId:(NSInteger)pid andName:(NSString *)pname {
+    self = [self init];
+    if (self) {
+        _pidVar = pid;
+        _pnameVar = pname;
     }
-    
-    return _productTypes;
+    NSLog(@" %@ with id = %d :\n ", _pnameVar, pid);
+    return self;
 }
 
-- (NSMutableArray *) mutProductTypes {
-    if([_mutProductTypes count] > 0) {
-        int i = 0;
-        for( id eachObject in _mutProductTypes){
-        	NSLog(@"[%i] %@ ", i, eachObject);
-            i++;
-        }
-    }
-    
-    return _mutProductTypes;
-}
-
--(void) setProductTypes:(NSArray *)productTypes{
-    @autoreleasepool {
-        
-        [productTypes retain];
-        [_productTypes release];
-        
-        _productTypes = productTypes;
-    }
++(Product*)productWithId:(NSInteger)pid andName:(NSString*)pname{
+        Product *retVal = [[Product alloc] initWithId:pid andName:pname];
+        return [retVal autorelease];
 }
 
 -(void) dealloc {
-    [_productTypes release];
-    _productTypes = nil;
-    //or
-    self.mutProductTypes = nil;
+    [_pnameVar release];
+    _pnameVar = nil;
     
     [super dealloc];
 }

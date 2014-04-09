@@ -19,7 +19,7 @@
     
 //Methods
 -(id) initCustomer;
--(void) deleteCustomerById : (NSInteger) customerId;
++(void) deleteCustomerById : (NSInteger) customerId;
 -(id) initWithUserId : (NSInteger) userId
            andCustomerId : (NSInteger) customerId
            andShippingAddress : (NSString *) shippingAddress
