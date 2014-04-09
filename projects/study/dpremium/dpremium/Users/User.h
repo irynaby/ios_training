@@ -12,16 +12,23 @@
 }
 
 @property NSInteger userId;
-@property NSString * userName;
-@property NSString * userAddress;
-@property NSString * userBirthDate;
+@property (retain,nonatomic) NSString * userName;
+@property (retain,nonatomic) NSString * userAddress;
+@property (retain,nonatomic) NSString * userBirthDate;
 
 //Methods
-- (id) initUser;
+
+- (id)initUser ;
+
 - (void) deleteUserById : (NSInteger) userId;
 
-- (void) userWithName : (NSString *) userName
+- (id) initWithName : (NSString *) userName
            andAddress : (NSString *) userAddress
            andBirthDate : (NSDate *) userBirthDate
            andUserId : (NSInteger) userId;
+
++(User *)userWithName : (NSString *) userName
+         andAddress : (NSString *) userAddress
+       andBirthDate : (NSDate *) userBirthDate
+          andUserId : (NSInteger) userId;
 @end

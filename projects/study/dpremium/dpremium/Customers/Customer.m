@@ -16,23 +16,54 @@
 @synthesize userId = _userIdVar;
 
 -(id) initCustomer{
+    self = [self init];
+    
+    if (self) {
     _customerIdVar = 0;
     _customerPhoneVar = 1234567;
     _shippingAddressVar =@"Milan, str. Franco, 3";
     _userIdVar = 1;
-    
+    }
     return self;
 }
 
 -(void) deleteCustomerById : (NSInteger) customerId {
-    NSLog(@"Customer with id %d had been deleted",_customerIdVar);
+    NSLog(@"Customer with id %ld had been deleted",_customerIdVar);
 }
 
--(void) customerWithUserId : (NSInteger) userId
+-(id) initWithUserId : (NSInteger) userId
            andCustomerId : (NSInteger) customerId
       andShippingAddress : (NSString *) shippingAddress
         andCustomerPhone : (NSInteger) customerPhone
 {
-    NSLog(@"Customer with id = %d :\n Shipping Address: %@ \n Phone: %d \n", _customerIdVar, _shippingAddressVar, _customerPhoneVar );
+    self = [self init];
+    if (self) {
+        _userIdVar = userId;
+        _customerIdVar = customerId ;
+        _shippingAddressVar = shippingAddress;
+        _customerPhoneVar = customerPhone;
+    }
+
+    NSLog(@"Customer with id = %ld :\n Shipping Address: %@ \n Phone: %ld \n", _customerIdVar, _shippingAddressVar, _customerPhoneVar );
+    return self;
 }
+
++(Customer *) customerWithUserId : (NSInteger) userId
+               andCustomerId : (NSInteger) customerId
+          andShippingAddress : (NSString *) shippingAddress
+            andCustomerPhone : (NSInteger) customerPhone
+{
+    Customer *retVal = [[Customer alloc] initWithUserId:userId andCustomerId:customerId andShippingAddress:shippingAddress andCustomerPhone:customerPhone];
+    
+    return [retVal autorelease];
+}
+
+-(void) dealloc{
+    //release your variables
+    [_customerIdVar release];
+    [_shippingAddressVar release];
+    [_customerPhoneVar release];
+    [super dealloc];
+}
+
 @end

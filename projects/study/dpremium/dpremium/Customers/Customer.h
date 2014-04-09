@@ -14,15 +14,21 @@
 
 @property NSInteger userId;
 @property NSInteger customerId;
-@property NSString * shippingAddress;
+@property(retain,nonatomic) NSString * shippingAddress;
 @property NSInteger customerPhone;
     
 //Methods
 -(id) initCustomer;
 -(void) deleteCustomerById : (NSInteger) customerId;
--(void) customerWithUserId : (NSInteger) userId
+-(id) initWithUserId : (NSInteger) userId
            andCustomerId : (NSInteger) customerId
            andShippingAddress : (NSString *) shippingAddress
            andCustomerPhone : (NSInteger) customerPhone;
+
+
++(Customer *) customerWithUserId : (NSInteger) userId
+               andCustomerId : (NSInteger) customerId
+          andShippingAddress : (NSString *) shippingAddress
+            andCustomerPhone : (NSInteger) customerPhone;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Categories;
 
 @interface Products : NSObject{
     NSArray * _productTypes;
@@ -14,6 +15,7 @@
 }
 
 @property (retain,nonatomic) NSArray * productTypes;
+@property (assign,nonatomic) Categories * productCategory;
 @property (retain,nonatomic) NSMutableArray * mutProductTypes;
 
 -(void) createProductsTypes;
