@@ -21,34 +21,40 @@
 -(void) removeProductWithId:(NSInteger)pid{
     NSLog(@"Product with id %d remove", pid);
 }
-
+/*
 -(Product*) findProductById:(NSInteger)pid {
-    for (id eachObject in ) {
-        <#statements#>
+    int i = 0;
+    for (Product *eachProduct in Product *pid) {
+        NSLog(@"product with id %ld", pid);
+        i++;
     }
    //NSLog(@"product %@ with id %ld", pname, pid);
     //return pname;
 }
+*/
 
 +(NSArray *)createTestCategories{
-    NSArray *names = [NSArray arrayWithObjects:@"Books",@"Clothes",@"Cars",@"Furniture",@"Toys",nil ];
+    NSArray *names = [NSArray arrayWithObjects:@"Books",@"Home",@"Office",@"Electronic",@"Toys",nil ];
     
     NSMutableArray *retVal = [NSMutableArray array];
     for (int i =0; i<[names count]; i++) {
+        
         ProductCategory *category = [[ProductCategory alloc] init];
         category.categoryName = [names objectAtIndex:i];
         [retVal addObject:category];
-        [category release];
+        //[category release];
     }
     
     return retVal;
 }
 
 -(void) createTestCategoryProducts{
+    //add 10 products for all categories
     for (int i = 0; i < 10; i++) {
         Product *product = [[Product alloc] init];
         product.productName = [NSString stringWithFormat:@"Category %@ Product %d", self.categoryName,  i];
         [self addProduct:product];
+        NSLog(@"Category: %@ \n Product: %@ \n", self.categoryName, product);
         [product release];
     }
 }

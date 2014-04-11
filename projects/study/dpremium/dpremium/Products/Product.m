@@ -22,7 +22,6 @@
     [category addProduct:self];
 }*/
 
-
 -(id) initWithId:(NSInteger)pid andName:(NSString *)pname {
     self = [self init];
     if (self) {

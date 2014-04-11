@@ -63,6 +63,7 @@
 		8497291E18D82654008789FB /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		8497292118D82885008789FB /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		8497292218D82885008789FB /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
+		84AD816418F6C69C00CD0C97 /* ProductAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductAction.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +95,7 @@
 			children = (
 				84046C7418D8751B003B998B /* ProductCategory.h */,
 				84046C7518D8751B003B998B /* ProductCategory.m */,
+				84AD816418F6C69C00CD0C97 /* ProductAction.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";

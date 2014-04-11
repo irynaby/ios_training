@@ -13,6 +13,7 @@
 #import "ProductCategory.h"
 #import "Product.h"
 
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -43,7 +44,9 @@
     newClothsProduct.productName = @"Dress";
     
     [clothsCategory addProduct:newClothsProduct];
-                            
+    @autoreleasepool {
+    //ProductCategory *category = [[ProductCategory alloc] init];
+    }
     //=====Cummon
     NSDateFormatter *format = [[NSDateFormatter alloc]init];
     
@@ -51,13 +54,13 @@
     User* user3 = nil;
     @autoreleasepool {
         User* user = [[User alloc] initUser];
-        User* user2 = [[User alloc] initWithName:@"Spirit" andAddress:@"Ivanovo 23" andBirthDate:[format  dateFromString:@"02.03.2000"] andUserId:1];
+        User* user2 = [[User alloc] initWithName:@"Sidorov Ivan" andAddress:@"Ivanovo 23" andBirthDate:[format  dateFromString:@"02.03.2000"] andUserId:1];
         
-        user3 = [[User userWithName:@"Spirit" andAddress:@"Ivanovo 23" andBirthDate:[format dateFromString:@"02.03.2000"] andUserId:1] retain];
+        user3 = [[User userWithName:@"Smirnova Lena" andAddress:@"Pobedy 3" andBirthDate:[format dateFromString:@"02.08.2000"] andUserId:1] retain];
         
     }
     
-    [User init];
+    [[User alloc] init];
     
     [User userWithName:@"Spirit" andAddress:@"Ivanovo 23" andBirthDate:[format dateFromString:@"02.03.2000"] andUserId:3];
     [User userWithName:@"Vasya" andAddress:@"Lubimova 23" andBirthDate:[format dateFromString:@"04.05.2002"] andUserId:1];
@@ -77,7 +80,7 @@
        customer3 = [[Customer alloc] initWithUserId:1 andCustomerId:3 andShippingAddress:@"Gromova 32" andCustomerPhone:7634567];
     }
     
-    [Customer init];
+    [[Customer alloc] init];
     
     //[Customer customerWithUserId: 1 andCustomerId: 2 andShippingAddress:@"Gromova 23" andCustomerPhone:1234567];
     //[Customer customerWithUserId: 3 andCustomerId: 1 andShippingAddress:@"Pobedy 23" andCustomerPhone:1238567];
@@ -105,23 +108,16 @@
     [order1 release];
      order1 = nil;
     */
+    
     //Products
-    //Products * products = [[Products alloc] init];
-    //[products createProductsTypes];
-    //[products productTypes];
-    //[products mutProductTypes];
     ProductCategory *category1 = [[ProductCategory alloc] init];
     
     Product *prod1 = [Product productWithId:1 andName:@"Ked"];
     prod1.productCategory = category1;
     [category1 addProduct:prod1];
     
-    Product *prod2 = [category1 findProductById:1];
+    //Product *prod2 = [category1 findProductById:1];
 
-    //Category
-
-    //Categories * categories = [[Categories alloc]init];
-    //[categories categoryProducts];
     
     return YES;
 }
