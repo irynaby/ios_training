@@ -9,7 +9,6 @@
 #import "ProductCategory.h"
 
 @implementation ProductCategory
-
 @synthesize categoryProducts = _categoryProductsVar;
 
 
@@ -33,8 +32,20 @@
 }
 */
 
+-(ProductCategory*) sortedProductCategory:(NSArray*)categoryName {
+    typedef NSComparisonResult(^NSComparator)(id obj1, id obj2);
+    
+    NSArray * sortedArray = [self.categoryProducts sortedArrayUsingComparator:^NSComparisonResult(ProductCategory *p1, ProductCategory *p2){
+        
+        return [p1.categoryName compare:p2.categoryName];
+    }];
+    
+    NSLog(@"Sorted category: %@", sortedArray);
+    return sortedArray;
+}
+
 +(NSArray *)createTestCategories{
-    NSArray *names = [NSArray arrayWithObjects:@"Books",@"Home",@"Office",@"Electronic",@"Toys",nil ];
+    NSArray *names = [NSArray arrayWithObjects:@"Electronic",@"Home & Garden",@"Toys,Kids & Baby",@"Sports & Entertainment",@"Bags & Shoes",@"Books",@"Office",nil ];
     
     NSMutableArray *retVal = [NSMutableArray array];
     for (int i =0; i<[names count]; i++) {
@@ -47,6 +58,8 @@
     
     return retVal;
 }
+
+
 
 -(void) createTestCategoryProducts{
     //add 10 products for all categories

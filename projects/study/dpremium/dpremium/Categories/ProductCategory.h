@@ -16,6 +16,7 @@
 -(void) addProduct:(Product *)product;
 -(void) removeProductWithId:(NSInteger)pid;
 //-(Product*) findProductById:(NSInteger)pid;
+-(ProductCategory*) sortedProductCategory:(NSArray*)categoryName;
 
 @property (retain,nonatomic) NSNumber * categoryID;
 @property (retain,nonatomic) NSString * categoryName;
