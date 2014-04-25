@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E4C3A6C0-4D46-447A-9BEB-5A83CC0C7352</string>
+	<key>IDESourceControlProjectName</key>
+	<string>premium</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>291A86F2-FA63-47AB-AE5C-5EAFFFE4E25D</key>
+		<string>https://github.com/irynaby/ios_training.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>projects/study/premium/premium.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>291A86F2-FA63-47AB-AE5C-5EAFFFE4E25D</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/irynaby/ios_training.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>291A86F2-FA63-47AB-AE5C-5EAFFFE4E25D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>291A86F2-FA63-47AB-AE5C-5EAFFFE4E25D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ios_training</string>
+		</dict>
+	</array>
+</dict>
+</plist>

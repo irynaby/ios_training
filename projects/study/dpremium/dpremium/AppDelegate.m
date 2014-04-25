@@ -29,6 +29,21 @@
         [cat createTestCategoryProducts];
     }
     
+    ProductCategory *cat = [ProductCategory GiveMeBestCategory:arr withComparator:^ComparatorResult(ProductCategory *obj1, ProductCategory *obj2) {
+        if ([obj1.categoryProducts count ] > [obj2.categoryProducts count]) {
+            //NSLog(@"First is Best");
+            return FirstIsBest;
+        }
+        else if ([obj1.categoryProducts count ] < [obj2.categoryProducts count]){
+            //NSLog(@"Second is Best");
+            return SecondIsBest;
+        }
+        else
+            //NSLog(@"Are Equal");
+            return AreEqual;
+    }];
+    
+    
     //Create new category
     ProductCategory *newCategor = [[ProductCategory alloc] init];
     newCategor.categoryName = @"NewCategory";
@@ -44,6 +59,8 @@
     newClothsProduct.productName = @"Dress";
     
     [clothsCategory addProduct:newClothsProduct];
+    NSArray *sortedClothsProducts = [clothsCategory sortedCategoryProducts];
+    
     @autoreleasepool {
     //ProductCategory *category = [[ProductCategory alloc] init];
     }

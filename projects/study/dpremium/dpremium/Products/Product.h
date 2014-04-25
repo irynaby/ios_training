@@ -16,6 +16,7 @@
 
 @property (assign,nonatomic) NSInteger productId;
 @property (copy,nonatomic) NSString *productName;
+@property (copy,nonatomic) NSString *productSKU;
 //@property (assign,nonatomic, getter = getProductCategory, setter = setProductCategory) ProductCategory * productCategory;
 @property (assign,nonatomic) ProductCategory * productCategory;
 

@@ -12,6 +12,7 @@
 @required
 -(void) addProduct:(Product *)product;
 -(void) removeProductWithId:(NSInteger)pid;
-//@optional
-//-(Product*) findProductById:(NSInteger)pid;
+@optional
+-(ProductCategory*) sortedProductCategory:(NSArray*)categoryName;
+-(Product*) findProductById:(NSInteger)pid;
 @end

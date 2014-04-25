@@ -44,6 +44,9 @@
     [super dealloc];
 }
 
+-(NSString*)description{
+    return [NSString stringWithFormat:@"Product: %@, %@", self.productName, self.productSKU];
+}
 
 @end
 
