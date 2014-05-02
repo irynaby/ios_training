@@ -29,4 +29,6 @@
 -(id)jsonParsingCategory:url;
 -(id)jsonParsingProduct:url withCategoryId:catId;
 
+-(void) doLayoutForOrientation:(UIInterfaceOrientation)orientaion;
+
 @end

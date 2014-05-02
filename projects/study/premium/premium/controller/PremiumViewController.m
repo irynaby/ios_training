@@ -32,9 +32,10 @@
 {
     [super viewDidLoad];
     
-    //call jsonParsingCategory
     [self jsonParsingCategory:@"http://www.irinap.com/jsonws/categories.php"];
- 
+    UIApplication *app = [UIApplication sharedApplication];
+    UIInterfaceOrientation currentOrientation = app.statusBarOrientation;
+    [self doLayoutForOrientation:currentOrientation];
 }
 
 -(void) loadView{
@@ -110,14 +111,43 @@
 }
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    //[super willAnimateRotationToInterfaceOrientation:<#toInterfaceOrientation#> duration:<#duration#>];
-    if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight){
-        if(self.btnCategory.tag == 1){
-            self.btnCategory.frame = CGRectMake(50, 100, self.view.frame.size.width, 30);
-        } else {
-            self.btnCategory.frame = CGRectMake(50, 100, self.view.frame.size.width/2, 30);
+    
+    [self doLayoutForOrientation:toInterfaceOrientation];
+    
+    }
+
+-(void) doLayoutForOrientation:(UIInterfaceOrientation)orientaion {
+    if (UIInterfaceOrientationIsPortrait(orientaion)) {
+        NSLog(@"Portrait mode");
+        int y = 0;
+        for(UIButton *btn in self.view.subviews){
+            
+            if(btn.tag >= 1){
+                btn.frame = CGRectMake( self.view.frame.size.width/4, 120*y*0.5+30, self.view.frame.size.width/2, 30);
+                y++;
+            }
         }
+    } else {
+        NSLog(@"Landscape mode");
+        int y = 0;
+        int x = 0;
         
+        for(UIButton *btn in self.view.subviews){
+            
+            if(btn.tag >= 1){
+
+                if(btn.tag % 2 ){
+                    x = 100;
+                    btn.frame = CGRectMake( x, 100+y, self.view.frame.size.width/2, 30);
+                    //NSLog(@"btn %d (%f, %f)", btn.tag, btn.frame.origin.x, btn.frame.origin.y);
+                } else {
+                    x= 500;
+                    btn.frame = CGRectMake( x, 100+y, self.view.frame.size.width/2, 30);
+                    //NSLog(@"btn %d (%f, %f)", btn.tag, btn.frame.origin.x, btn.frame.origin.y);
+                    y += 50;
+                }
+            }
+        }
     }
 }
 
