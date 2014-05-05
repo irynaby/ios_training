@@ -44,7 +44,7 @@
     [titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [titleLabel sizeToFit];
     
-    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake( 100, 50, 280, 30 )];
+    UITextField *textField = [[[UITextField alloc]initWithFrame:CGRectMake( 100, 50, 280, 30 )]autorelease];
     textField.placeholder = @"Enter category name";
     textField.textColor = [UIColor blackColor];
     textField.backgroundColor = [UIColor clearColor];
@@ -82,5 +82,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+-(void)dealloc{
+    
+    [super dealloc];
+}
 
 @end

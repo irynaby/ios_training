@@ -13,14 +13,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]autorelease];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
     PremiumViewController *contr = [[PremiumViewController alloc] initWithNibName:nil bundle:nil];
     self.window.rootViewController = contr;
-    
+
+    [contr autorelease];
+
     //CreateCategoryViewController *createContr1 = [[CreateCategoryViewController alloc]init]
     return YES;
 }

@@ -10,7 +10,6 @@
 
 @interface PremiumViewController ()
     @property (retain) NSMutableArray* LCCategories;
-
 @end
 
 @implementation PremiumViewController
@@ -32,24 +31,26 @@
 {
     [super viewDidLoad];
     
-    [self jsonParsingCategory:@"http://www.irinap.com/jsonws/categories.php"];
+    //[self jsonParsingCategory:@"http://www.irinap.com/jsonws/categories.php"];
+    
     UIApplication *app = [UIApplication sharedApplication];
     UIInterfaceOrientation currentOrientation = app.statusBarOrientation;
     [self doLayoutForOrientation:currentOrientation];
+    
+    [self createActivityIndicator];
+    
+    [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://www.irinap.com/jsonws/categories.php"];
+    
 }
 
--(void) loadView{
-    CGRect screenArea = [[UIScreen mainScreen] applicationFrame];
+-(void)createActivityIndicator {
+        self.activityIndicatorView = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]autorelease];
+        self.activityIndicatorView.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     
-    UIView *viewArea = [[[UIView alloc] initWithFrame:screenArea]autorelease];
-    viewArea.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.view = viewArea;
-    
-    viewArea = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenArea.size.width, screenArea.size.height)];
-    viewArea.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.view addSubview:viewArea];
-
+        [self.view addSubview: self.activityIndicatorView];
+        [self.activityIndicatorView startAnimating];    
 }
+
 
 -(id)createBackBtn{
     UIFont *buttonFont = [UIFont fontWithName:@"Geneva" size:17.0];
@@ -71,6 +72,9 @@
 }
 
 -(id)createCategoryBtn:(NSArray *)items{
+    [self.activityIndicatorView stopAnimating];
+    [self.activityIndicatorView removeFromSuperview];
+    
     //btns properties
     UIFont *buttonFont = [UIFont fontWithName:@"Geneva" size:17.0];
     UIColor *buttonColorDefault = [UIColor colorWithRed:0.357 green:0.18 blue:0.176 alpha:1.0];
@@ -89,8 +93,6 @@
         btn.layer.cornerRadius = 10;
         [btn sizeToFit];
         [[btn retain]autorelease];
-        
-        //btn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         NSDictionary *item = [[items objectAtIndex:i] objectForKey:@"item"];
         //NSLog(@"Item %@",item);
@@ -188,11 +190,13 @@
 
 -(void)showCategoryPage{
     //NSLog(@"Btn \"Back\" was pressed!");
+    //[self.activityIndicatorView startAnimating];
     for(UILabel *lbl in self.view.subviews){
             [lbl removeFromSuperview];
     }
 
-    [self jsonParsingCategory:@"http://www.irinap.com/jsonws/categories.php"];
+    //[self jsonParsingCategory:@"http://www.irinap.com/jsonws/categories.php"];
+    [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://www.irinap.com/jsonws/categories.php"];
     //NSLog(@"%@",self.btnCategory);
     for(UIButton *btn in self.view.subviews){
         if(btn.tag == 0){
@@ -222,6 +226,8 @@
     
     [self hideCategoryPage];
     [self jsonParsingProduct:@"http://www.irinap.com/jsonws/service.php" withCategoryId:catId];
+    //NSDictionary *extraParams = [NSDictionary dictionaryWithObjectsAndKeys:@"http://www.irinap.com/jsonws/service.php", catId, nil];
+    //[NSThread detachNewThreadSelector:@selector(jsonParsingProduct:withCategoryId:) toTarget:self withObject: extraParams];
 }
 
 - (void)didReceiveMemoryWarning
@@ -231,57 +237,64 @@
 }
 
 -(id)jsonParsingCategory:url{
-    NSData *responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-    NSError *err = nil;
-    id result = nil;
-    
-    if(responseData !=nil){
-        //JSON Parsing
-        result = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&err];
-        //NSLog(@"Result = %@",result);
+    @autoreleasepool {
         
-        if(err) {
-            NSLog(@"%@", [err localizedDescription]);
-        }else{
-            if([result isKindOfClass:[NSDictionary class]]){
-                //extract specific value
-                NSArray *items = [result objectForKey:@"items"];
+        NSData *responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        NSError *err = nil;
+        id result = nil;
+    
+        if(responseData !=nil){
+            //JSON Parsing
+            result = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&err];
+            //NSLog(@"Result = %@",result);
+        
+            if(err) {
+                NSLog(@"%@", [err localizedDescription]);
+            }else{
+                if([result isKindOfClass:[NSDictionary class]]){
+                    //extract specific value
+                    NSArray *items = [result objectForKey:@"items"];
                 
-                [self createCategoryBtn:items ];
+                    [self performSelectorOnMainThread:@selector(createCategoryBtn:) withObject:items waitUntilDone:NO];
+                }
             }
         }
+    
+        return result;
     }
-
-    return result;
 }
 
 -(id)jsonParsingProduct:url withCategoryId:catId{
     //Get request and response through URL
-    NSData *responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-    NSError *err = nil;
-    id result = nil;
+    @autoreleasepool {
+        
+        NSData *responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        NSError *err = nil;
+        id result = nil;
     
-    if(responseData !=nil){
-        //JSON Parsing
-        result = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&err];
-        //NSLog(@"Result = %@",result);
+        if(responseData !=nil){
+            //JSON Parsing
+            result = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&err];
+            //NSLog(@"Result = %@",result);
         
-        if(err) {
-            NSLog(@"%@", [err localizedDescription]);
-        }else{
-            if([result isKindOfClass:[NSDictionary class]]){
-                //NSLog(@"Result is dictionary!");
+            if(err) {
+                NSLog(@"%@", [err localizedDescription]);
+            }else{
+                if([result isKindOfClass:[NSDictionary class]]){
+                    //NSLog(@"Result is dictionary!");
                 
-                //extract specific value
-                NSArray *items = [result objectForKey:@"items"];
+                    //extract specific value
+                    NSArray *items = [result objectForKey:@"items"];
                 
-                [self createProductLabel:items withCategoryId:catId];
+                    [self createProductLabel:items withCategoryId:catId];
+                    
+                }
             }
-        }
         
+        }
+    
+        return result;
     }
-
-    return result;
 }
 
 /*
@@ -299,6 +312,7 @@
     [_btnCategory release];
     [_btnBack release];
     [_lblProduct release];
+    
     [super dealloc];
 }
 

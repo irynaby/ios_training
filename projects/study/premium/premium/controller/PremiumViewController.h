@@ -16,6 +16,7 @@
 @property (retain,nonatomic) UIButton *btnCategory;
 @property (retain,nonatomic) UIButton *btnBack;
 @property (retain,nonatomic) UILabel *lblProduct;
+@property (retain, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 
 -(void)showCategoryPage;
 -(void)showProductPage:(id) sender;
@@ -30,5 +31,7 @@
 -(id)jsonParsingProduct:url withCategoryId:catId;
 
 -(void) doLayoutForOrientation:(UIInterfaceOrientation)orientaion;
+
+-(void)createActivityIndicator;
 
 @end
