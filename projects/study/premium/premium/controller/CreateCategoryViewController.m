@@ -28,7 +28,30 @@
     [super viewDidLoad];
     
     [self addTextField];
-    // Do any additional setup after loading the view.
+    [self createNavBar];
+    
+}
+
+-(void) createNavBar {
+    /*Create navBar*/
+    UINavigationBar *navBar = [[[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)]autorelease];
+    navBar.backgroundColor = [UIColor brownColor];
+    navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    UINavigationItem *navItem = [[[UINavigationItem alloc]init]autorelease];
+    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    
+    navItem.leftBarButtonItem = backBtn;
+    navItem.rightBarButtonItem = doneBtn;
+    
+    navBar.items = @[ navItem ];
+    [self.view addSubview:navBar];
+    [backBtn release];
+    [doneBtn release];
+}
+
+-(void)back {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,14 +61,14 @@
 }
 
 -(void)addTextField{
-    UILabel *titleLabel = [[UILabel alloc]init];
-    titleLabel.frame = CGRectMake( 50, 50, 210, 50 );
+    UILabel *titleLabel = [[[UILabel alloc]init]autorelease];
+    titleLabel.frame = CGRectMake( 50, 150, 210, 50 );
     titleLabel.text = @"Add category name:";
     [titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [titleLabel sizeToFit];
     
-    UITextField *textField = [[[UITextField alloc]initWithFrame:CGRectMake( 100, 50, 280, 30 )]autorelease];
-    textField.placeholder = @"Enter category name";
+    UITextField *textField = [[[UITextField alloc]initWithFrame:CGRectMake( 100, 150, 280, 30 )]autorelease];
+    textField.placeholder = @"Enter new category name";
     textField.textColor = [UIColor blackColor];
     textField.backgroundColor = [UIColor clearColor];
     [textField setFont:[UIFont boldSystemFontOfSize:12]];
@@ -54,8 +77,7 @@
     
     [self.view addSubview:textField];
     //sets the delegate to the current class
-    textField.delegate = self;
-    
+    textField.delegate = self; 
  
 }
 

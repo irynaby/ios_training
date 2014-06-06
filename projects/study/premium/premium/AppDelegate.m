@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import "PremiumViewController.h"
+#import "CreateCategoryViewController.h"
+
+//@synthesize window, navController, premiumController;
 
 @implementation AppDelegate
 
@@ -18,12 +21,42 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    PremiumViewController *contr = [[PremiumViewController alloc] initWithNibName:nil bundle:nil];
-    self.window.rootViewController = contr;
-
-    [contr autorelease];
-
-    //CreateCategoryViewController *createContr1 = [[CreateCategoryViewController alloc]init]
+    //check if the first viewcontroller exists, otherwise create it
+    if(self.premiumController == nil)
+    {
+        PremiumViewController *contr = [[[PremiumViewController alloc] initWithNibName:nil bundle:nil]autorelease];
+        //self.window.rootViewController = contr;
+        self.premiumController = contr;
+    }
+    //CreateCategoryViewController *createContr1 = [[[CreateCategoryViewController alloc]init]autorelease];
+    //self.window.rootViewController = createContr1;
+    
+    //create the navigation controller and add the controllers view to the window
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:self.premiumController];
+    
+    //set nav bar bkgr color
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:224/255.0f green:155/255.0f blue:43/255.0f alpha:1.0f]];
+    
+    //changing the font of nav bar title
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    shadow.shadowOffset = CGSizeMake(0, 1);
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+                                                           shadow, NSShadowAttributeName,
+                                                           [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
+    
+    //customize the nav btn color
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    //set the navConntroller property
+    [self setNavController:nav];
+    
+    //release nav controller
+    [nav release];
+    
+    [self.window addSubview:[nav view]];
+    
     return YES;
 }
 
@@ -53,5 +86,4 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
 @end

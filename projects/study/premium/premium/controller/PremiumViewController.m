@@ -7,6 +7,9 @@
 //
 
 #import "PremiumViewController.h"
+#import "CreateCategoryViewController.h"
+#import "CreateProductViewController.h"
+#import "ProductDetailViewController.h"
 
 @interface PremiumViewController ()
     @property (retain) NSMutableArray* LCCategories;
@@ -17,6 +20,16 @@
 @synthesize btnCategory = _btnCategory;
 @synthesize btnBack = _btnBack;
 @synthesize lblProduct = _lblProduct;
+@synthesize text = _text;
+@synthesize list = _list;
+@synthesize tableView = _tableView;
+@synthesize indexTitlesArray = _indexTitlesArray;
+//@synthesize newCategoryBtn = _newCategoryBtn;
+@synthesize createCategoryBtn = _createCategoryBtn;
+@synthesize createProductBtn = _createProductBtn;
+//@synthesize navBar = _navBar;
+
+//@synthesize detailVC = _detailVC;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,14 +54,90 @@
     
     [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://www.irinap.com/jsonws/categories.php"];
     
+    self.tableView = [[[UITableView alloc] initWithFrame: CGRectMake(200, 150, self.view.frame.size.width/2, self.view.frame.size.height/2) style:UITableViewStyleGrouped]autorelease];
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundView = nil;
+    
+    NSString *letters = @"A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
+    self.indexTitlesArray = [letters componentsSeparatedByString:@" "];
+    
+    //set the title of the navigation view
+    [self.navigationItem setTitle:@"Premium View"];
+}
+
+-(id) createCategoryBtnItem {
+    UIButton *newCategoryBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    newCategoryBtn.backgroundColor = [UIColor colorWithRed:224/255.0f green:155/255.0f blue:43/255.0f alpha:1.0f];
+    newCategoryBtn.frame = CGRectMake(20, 30, 150, 30);
+    [newCategoryBtn setTitle:@"Create Category" forState:UIControlStateNormal];
+    newCategoryBtn.tintColor = [UIColor blackColor];
+    newCategoryBtn.autoresizesSubviews = YES;
+    newCategoryBtn.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
+    [newCategoryBtn addTarget:self action:@selector(showCreateCategoryPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *createCategoryBtn = [[UIBarButtonItem alloc] initWithCustomView:newCategoryBtn];
+    
+    self.createCategoryBtn = createCategoryBtn;
+    [createCategoryBtn release];
+    
+    return self.createCategoryBtn;
+}
+
+-(id) createProductBtnItem {
+    
+    UIButton *customBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    customBtn2.backgroundColor = [UIColor colorWithRed:224/255.0f green:155/255.0f blue:43/255.0f alpha:1.0f];
+    customBtn2.frame = CGRectMake(20, 30, 150, 30);
+    [customBtn2 setTitle:@"Create Product" forState:UIControlStateNormal];
+    customBtn2.tintColor = [UIColor blackColor];
+    customBtn2.autoresizesSubviews = YES;
+    customBtn2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
+    [customBtn2 addTarget:self action:@selector(showCreateProductPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *createProductBtn = [[UIBarButtonItem alloc] initWithCustomView:customBtn2];
+    
+    self.createProductBtn = createProductBtn;
+    
+    [createProductBtn release];
+    return self.createProductBtn;
+}
+
+-(void)showCreateCategoryPage{
+    NSLog(@"Create category Btn tap");
+    CreateCategoryViewController *createCategoryVC = [[[CreateCategoryViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:createCategoryVC animated:YES];
+    //[self presentViewController:createCategoryVC animated:YES completion:nil];
+}
+
+-(void)showCreateProductPage{
+    NSLog(@"Create product Btn tap");
+    CreateProductViewController *createProductVC = [[[CreateProductViewController alloc] init] autorelease];
+    //[self presentViewController:createProductVC animated:YES completion:nil];
+    [self.navigationController pushViewController:createProductVC animated:YES];
 }
 
 -(void)createActivityIndicator {
+    /*Add activity indicator*/
         self.activityIndicatorView = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]autorelease];
         self.activityIndicatorView.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     
         [self.view addSubview: self.activityIndicatorView];
-        [self.activityIndicatorView startAnimating];    
+        [self.activityIndicatorView startAnimating];
+    
+    /*Text "Loading..."*/
+    UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 30, self.view.frame.size.height/2 + 30, 130, 30)];
+    text.backgroundColor = [UIColor clearColor];
+    text.textColor = [UIColor grayColor];
+    text.font = [UIFont systemFontOfSize:14];
+    text.text = @"Loading...";
+    [[text retain]autorelease];
+    
+    self.text = text;
+    [self.view addSubview:self.text];
 }
 
 
@@ -56,7 +145,7 @@
     UIFont *buttonFont = [UIFont fontWithName:@"Geneva" size:17.0];
     UIColor *buttonColorBackgroundDefault = [UIColor colorWithRed:0.82 green:0.643 blue:0.639 alpha:1.0];
     
-    UIButton *buttonBack = [[UIButton alloc] initWithFrame:CGRectMake(50, 50, 110, 30)];
+    UIButton *buttonBack = [[UIButton alloc] initWithFrame:CGRectMake(50, 70, 110, 30)];
     [buttonBack setShowsTouchWhenHighlighted:TRUE];
     [buttonBack addTarget:self action:@selector(showCategoryPage) forControlEvents:UIControlEventTouchDown];
     [buttonBack setTitle:@"Back" forState:UIControlStateNormal];
@@ -72,8 +161,10 @@
 }
 
 -(id)createCategoryBtn:(NSArray *)items{
+
     [self.activityIndicatorView stopAnimating];
     [self.activityIndicatorView removeFromSuperview];
+    [self.text removeFromSuperview];
     
     //btns properties
     UIFont *buttonFont = [UIFont fontWithName:@"Geneva" size:17.0];
@@ -102,7 +193,7 @@
         [btn setTitle:categoryName forState:UIControlStateNormal];
         [btn setTag: [catId intValue]];
         
-        btn.frame = CGRectMake( self.view.frame.size.width/4, 120*i*0.5+30, self.view.frame.size.width/2, 30);
+        btn.frame = CGRectMake( self.view.frame.size.width/4, 120*i*0.5+70, self.view.frame.size.width/2, 30);
         self.btnCategory = btn;
         self.btnCategory.hidden = FALSE;
         
@@ -152,12 +243,12 @@
         }
     }
 }
-
+/*
 -(id)createProductLabel:(NSArray *)items withCategoryId:catId{
     int y = 0;
     for(int i=0; i < [items count]; i++){
         UILabel *labelProduct = [[UILabel alloc]init];
-        labelProduct.frame = CGRectMake( 250, 100*y*.5+30, 210, 50);
+        labelProduct.frame = CGRectMake( 250, 100*y*.5+60, 210, 50);
         labelProduct.lineBreakMode = NSLineBreakByWordWrapping;
         //labelProduct.numberOfLines = 0;
         //[labelProduct sizeToFit];
@@ -187,22 +278,293 @@
     
     return self.lblProduct;
 }
+*/
+-(id)createProductLabel:(NSArray *)items withCategoryId:catId{
+    self.list = [[NSMutableArray alloc] init];
+    
+    int y = 0;
+    for(int i=0; i < [items count]; i++) {
+        
+        NSDictionary *item = [[items objectAtIndex:i] objectForKey:@"item"];
+        
+        NSNumber *prodCatId = [NSNumber numberWithInt:[[item valueForKey:@"cat_id"] intValue]];
+        //NSString *productName = [item valueForKey:@"prodName"];
+        //NSDecimalNumber *prodPrice = [NSDecimalNumber decimalNumberWithString:[item valueForKey:@"prodPrice"]];
+        //NSString * prodDesc = [item valueForKey:@"prodDesc"];
+        
+        if (catId == prodCatId) {
+            [self.list addObject:item];
+            y++;
+        }
+        
+    }
+    //NSLog(@"List items %@",self.list);
+    //NSLog(@"Count of lists = %lu",(unsigned long)[self.list count]);
+    return self.list;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger)section {
+    
+    //NSLog(@"table view count is %lu", (unsigned long)[self.list count]);
+    //NSInteger count = [self.list count];
+    if([self.list count] == 0){return 1;}
+    return [self.list count];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"LOAD CELL");
+    
+    static NSString *cellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if(cell == nil){
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier]autorelease];
+        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
+    cell.textLabel.textColor = [UIColor blackColor];
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
+    //cell.textLabel.text = productName;
+    //cell.detailTextLabel.text = prodPrice;
+    
+    NSLog(@"IndexPath row = %ld and list count = %lu",(long)indexPath.row,(unsigned long)[self.list count]);
+    if(indexPath.row < [self.list count]){
+        NSDictionary *dictionary = [self.list objectAtIndex:indexPath.row];
+        NSString *productName = [dictionary valueForKey:@"prodName"];
+        NSString *prodPrice = [dictionary valueForKey:@"prodPrice"];
+        NSString * prodDesc = [dictionary valueForKey:@"prodDesc"];
+        self.prodDesc = prodDesc;
+        self.prodPrice = prodPrice;
+        self.productName = productName;
+        self.dictionary = dictionary;
+        
+        cell.textLabel.text = productName;
+        cell.detailTextLabel.text = prodPrice;
+    }else{
+        cell.textLabel.text = @"Add new product";
+        cell.textLabel.textColor = [UIColor blueColor];
+        cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.detailTextLabel.text = @"";
+    }
+
+    //created selected color for row
+    UIView *bgColorView = [[[UIView alloc]init]autorelease];
+    bgColorView.backgroundColor = [UIColor yellowColor];
+    cell.selectedBackgroundView = bgColorView;
+    
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
+    //[self.tableView autorelease];
+    
+    return cell;
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    //NSLog(@"Calling view for header");
+    //create label
+    UILabel *sectionHeader = [[[UILabel alloc] initWithFrame:CGRectZero]autorelease];
+    sectionHeader.backgroundColor = [UIColor clearColor];
+    sectionHeader.textAlignment = NSTextAlignmentCenter;
+    sectionHeader.font = [UIFont boldSystemFontOfSize:15];
+    sectionHeader.textColor = [UIColor brownColor];
+    sectionHeader.highlightedTextColor = [UIColor yellowColor];
+    sectionHeader.text = @"Choose the product from this list:";
+    
+    //NSLog(@"Section #%ld name - %@",(long)section, sectionHeader.text);
+
+    //create header view and add sectionHeader as a subview
+    //UIView *headerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)]autorelease];
+    
+    //[headerView addSubview:sectionHeader];
+    return sectionHeader;
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
+}
+/*
+ 
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    if(cell.selected){
+        NSUInteger row = [indexPath row];
+        NSString * rowValue = [self.list objectAtIndex:row];
+        NSString * msg = [[NSString alloc] initWithFormat:@"U selected %@", rowValue];
+        UIAlertView * msgAlert = [[UIAlertView alloc] initWithTitle:@"Row selected" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [msgAlert show];
+    }
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+ 
+}
+ */
+/*
+-(void) tableView: (UITableView *) tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    //NSUInteger row = [indexPath row];
+    //NSString * rowValue = [self.list objectAtIndex:row];
+
+     //NSString * msg = [[[NSString alloc] initWithFormat:@"U selected %@", rowValue]autorelease];
+     //UIAlertView * msgAlert = [[[UIAlertView alloc] initWithTitle:@"Description" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil]autorelease];
+     //[msgAlert show];
+
+    
+    //ProductDetailViewController *detailVC = [[[ProductDetailViewController alloc]init] autorelease];
+    //[self presentViewController:detailVC animated:YES completion:nil];
+    //[self.navigationController pushViewController:detailVC animated:YES];
+    
+}
+*/
+-(void) tableView: (UITableView *) tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    [self tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    //NSDictionary *dictionary = [self.list objectAtIndex:indexPath.row];
+    //NSLog(@"didSelectRowAtIndexPath call - %@",dictionary);
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    ProductDetailViewController *detailVC = [[[ProductDetailViewController alloc]init] autorelease];
+    detailVC.product = [self.list objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:detailVC animated:YES];
+    //[self presentViewController:detailVC animated:YES completion:nil];
+}
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    NSLog(@"Set edit mode for table!");
+    [super setEditing:editing animated:animated];
+    [self.tableView setEditing:editing animated:animated];
+    [self.tableView reloadData];
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath: (NSIndexPath *)indexPath {
+    //NSLog(@"Can edit row in section %ld",(long)indexPath.section);
+    /*
+    if (indexPath.section == 0) {
+        return NO;
+    }
+    */
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        [tableView beginUpdates];
+        
+            UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"Delete"
+                              message: @"Do you really want to delete this product?"
+                              delegate: self
+                              cancelButtonTitle: @"Cancel"
+                              otherButtonTitles: @"Of course!", nil];
+            [alert show];
+            [alert release];
+        
+            //Delete the row from the dataSource
+            [self.list removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        [tableView endUpdates];
+
+	}else if (editingStyle == UITableViewCellEditingStyleInsert){
+        
+         [tableView beginUpdates];
+        
+        /*
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"Insert"
+                              message: @"Do you really want to insert the product?"
+                              delegate: self
+                              cancelButtonTitle: @"Cancel"
+                              otherButtonTitles: @"Of course!", nil];
+        [alert show];
+        [alert release];
+        */
+            [self showCreateProductPage];
+            //Insert something into the array, and you can just add a populated NSIndexPath of data or simplr reload data
+            //[self.list addObject:@"I'm a new item!"];        
+            //[tableView reloadData];
+        
+            [tableView endUpdates];
+
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row < [self.list count]){
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleInsert;
+}
+
+- (BOOL)tableView:(UITableView *)tableView
+    shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+-(void)tableView:(UITableView *)tableView
+    moveRowAtIndexPath: (NSIndexPath *)sourceIndexPath
+     toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+    [self.list insertObject: [self.list objectAtIndex:sourceIndexPath.row] atIndex:destinationIndexPath.row];
+    [self.list removeObjectAtIndex:(sourceIndexPath.row + 1)];
+    
+}
+
+-(BOOL)tableView:(UITableView *)tableView
+    canMoveRowAtIndexPath: (NSIndexPath *)indexPath {
+    NSLog(@"Can move row at indexPath %ld", (long)indexPath.row);
+    
+    //Don't move the first row
+    if (indexPath.row == 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+-(NSIndexPath *)tableView:(UITableView *)tableView
+      targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+      toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+    if (proposedDestinationIndexPath.row == [self.list count]) {
+        return sourceIndexPath;
+    }
+    
+    return proposedDestinationIndexPath;
+}
 
 -(void)showCategoryPage{
     //NSLog(@"Btn \"Back\" was pressed!");
-    //[self.activityIndicatorView startAnimating];
+    
     for(UILabel *lbl in self.view.subviews){
             [lbl removeFromSuperview];
     }
 
     //[self jsonParsingCategory:@"http://www.irinap.com/jsonws/categories.php"];
-    [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://www.irinap.com/jsonws/categories.php"];
+    [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://natalika.info/jsonws/categories.php"];
     //NSLog(@"%@",self.btnCategory);
     for(UIButton *btn in self.view.subviews){
         if(btn.tag == 0){
             [btn removeFromSuperview];
         }
     }
+    [self.tableView removeFromSuperview];
+    [self createCategoryBtnItem];
+    self.navigationItem.leftBarButtonItem = self.createCategoryBtn;
 }
 
 -(void)hideCategoryPage{
@@ -213,11 +575,14 @@
         }
     }
     [self createBackBtn];
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self createProductBtnItem];
+    self.navigationItem.leftBarButtonItem = self.createProductBtn;
 }
 
 -(void)showProductPage:(UIButton *) sender {
     //NSLog(@"Btn \"show Category Page\" was pressed!");
-
+    
     UIButton *someBtn = (UIButton *) sender;
     //NSLog(@"The button title is %@", someBtn.titleLabel.text);
     //NSLog(@"The button catId is %d", someBtn.tag);
@@ -225,9 +590,12 @@
     NSNumber * catId = [NSNumber numberWithInt:someBtn.tag];
     
     [self hideCategoryPage];
-    [self jsonParsingProduct:@"http://www.irinap.com/jsonws/service.php" withCategoryId:catId];
+    [self jsonParsingProduct:@"http://natalika.info/jsonws/service.php" withCategoryId:catId];
     //NSDictionary *extraParams = [NSDictionary dictionaryWithObjectsAndKeys:@"http://www.irinap.com/jsonws/service.php", catId, nil];
     //[NSThread detachNewThreadSelector:@selector(jsonParsingProduct:withCategoryId:) toTarget:self withObject: extraParams];
+    //[self.navigationController pushViewController:self.tableView animated:YES];
+    [self.view addSubview:self.tableView];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -287,6 +655,7 @@
                     NSArray *items = [result objectForKey:@"items"];
                 
                     [self createProductLabel:items withCategoryId:catId];
+                    //[self performSelectorOnMainThread:@selector(createProductLabel:withCategoryId:) withObject:[NSMutableArray arrayWithObjects:items, catId, nil] waitUntilDone:NO];
                     
                 }
             }
@@ -297,21 +666,21 @@
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return self.indexTitlesArray;
 }
-*/
 
 -(void)dealloc{
     [_btnCategory release];
     [_btnBack release];
     [_lblProduct release];
+    [_text release];
+    [_list release];
+    [_tableView release];
+    [_indexTitlesArray release];
+    [_createCategoryBtn release];
+    [_createProductBtn release];
+    //[_detailVC release];
     
     [super dealloc];
 }

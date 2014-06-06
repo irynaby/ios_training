@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PremiumViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (retain,nonatomic) UINavigationController *navController;
+@property (retain,nonatomic) PremiumViewController *premiumController;
 
 @end
