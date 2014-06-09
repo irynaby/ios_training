@@ -31,11 +31,14 @@
 
 //@synthesize detailVC = _detailVC;
 
+@synthesize prodImage = _prodImage;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.LCCategories = [NSMutableArray array];
+        
     }
     return self;
 }
@@ -44,7 +47,6 @@
 {
     [super viewDidLoad];
     
-    //[self jsonParsingCategory:@"http://www.irinap.com/jsonws/categories.php"];
     
     UIApplication *app = [UIApplication sharedApplication];
     UIInterfaceOrientation currentOrientation = app.statusBarOrientation;
@@ -52,7 +54,7 @@
     
     [self createActivityIndicator];
     
-    [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://www.irinap.com/jsonws/categories.php"];
+    [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://secondstock.by/json/categories.php"];
     
     self.tableView = [[[UITableView alloc] initWithFrame: CGRectMake(200, 150, self.view.frame.size.width/2, self.view.frame.size.height/2) style:UITableViewStyleGrouped]autorelease];
     
@@ -62,18 +64,16 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.backgroundView = nil;
     
-    NSString *letters = @"A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
-    self.indexTitlesArray = [letters componentsSeparatedByString:@" "];
-    
     //set the title of the navigation view
-    [self.navigationItem setTitle:@"Premium View"];
+    [self.navigationItem setTitle:@"МАГАЗИН ОДЕЖДЫ"];
+    
 }
 
 -(id) createCategoryBtnItem {
     UIButton *newCategoryBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     newCategoryBtn.backgroundColor = [UIColor colorWithRed:224/255.0f green:155/255.0f blue:43/255.0f alpha:1.0f];
-    newCategoryBtn.frame = CGRectMake(20, 30, 150, 30);
-    [newCategoryBtn setTitle:@"Create Category" forState:UIControlStateNormal];
+    newCategoryBtn.frame = CGRectMake(20, 30, 190, 30);
+    [newCategoryBtn setTitle:@"Создать категорию" forState:UIControlStateNormal];
     newCategoryBtn.tintColor = [UIColor blackColor];
     newCategoryBtn.autoresizesSubviews = YES;
     newCategoryBtn.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
@@ -91,8 +91,8 @@
     
     UIButton *customBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     customBtn2.backgroundColor = [UIColor colorWithRed:224/255.0f green:155/255.0f blue:43/255.0f alpha:1.0f];
-    customBtn2.frame = CGRectMake(20, 30, 150, 30);
-    [customBtn2 setTitle:@"Create Product" forState:UIControlStateNormal];
+    customBtn2.frame = CGRectMake(20, 30, 170, 30);
+    [customBtn2 setTitle:@"Создать продукт" forState:UIControlStateNormal];
     customBtn2.tintColor = [UIColor blackColor];
     customBtn2.autoresizesSubviews = YES;
     customBtn2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
@@ -133,7 +133,7 @@
     text.backgroundColor = [UIColor clearColor];
     text.textColor = [UIColor grayColor];
     text.font = [UIFont systemFontOfSize:14];
-    text.text = @"Loading...";
+    text.text = @"Загрузка...";
     [[text retain]autorelease];
     
     self.text = text;
@@ -145,10 +145,10 @@
     UIFont *buttonFont = [UIFont fontWithName:@"Geneva" size:17.0];
     UIColor *buttonColorBackgroundDefault = [UIColor colorWithRed:0.82 green:0.643 blue:0.639 alpha:1.0];
     
-    UIButton *buttonBack = [[UIButton alloc] initWithFrame:CGRectMake(50, 70, 110, 30)];
+    UIButton *buttonBack = [[UIButton alloc] initWithFrame:CGRectMake(50, 70, 150, 30)];
     [buttonBack setShowsTouchWhenHighlighted:TRUE];
     [buttonBack addTarget:self action:@selector(showCategoryPage) forControlEvents:UIControlEventTouchDown];
-    [buttonBack setTitle:@"Back" forState:UIControlStateNormal];
+    [buttonBack setTitle:@"Категории" forState:UIControlStateNormal];
     [buttonBack.titleLabel setFont:buttonFont];
     buttonBack.backgroundColor = buttonColorBackgroundDefault;
     buttonBack.layer.cornerRadius = 10;
@@ -187,11 +187,15 @@
         
         NSDictionary *item = [[items objectAtIndex:i] objectForKey:@"item"];
         //NSLog(@"Item %@",item);
-        NSNumber *catId = [item valueForKey:@"catId"];
-        NSString *categoryName = [item valueForKey:@"catName"];
-
-        [btn setTitle:categoryName forState:UIControlStateNormal];
-        [btn setTag: [catId intValue]];
+        //NSNumber *catId = [item valueForKey:@"catId"];
+        //NSString *categoryName = [item valueForKey:@"catName"];
+        NSNumber *catId = [item valueForKey:@"secid"];
+        NSString *categoryName = [item valueForKey:@"secname"];
+        
+           [btn setTitle:categoryName forState:UIControlStateNormal];
+            [btn setTag: [catId intValue]];
+        
+        
         
         btn.frame = CGRectMake( self.view.frame.size.width/4, 120*i*0.5+70, self.view.frame.size.width/2, 30);
         self.btnCategory = btn;
@@ -287,7 +291,7 @@
         
         NSDictionary *item = [[items objectAtIndex:i] objectForKey:@"item"];
         
-        NSNumber *prodCatId = [NSNumber numberWithInt:[[item valueForKey:@"cat_id"] intValue]];
+        NSNumber *prodCatId = [NSNumber numberWithInt:[[item valueForKey:@"secid"] intValue]];
         //NSString *productName = [item valueForKey:@"prodName"];
         //NSDecimalNumber *prodPrice = [NSDecimalNumber decimalNumberWithString:[item valueForKey:@"prodPrice"]];
         //NSString * prodDesc = [item valueForKey:@"prodDesc"];
@@ -316,7 +320,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"LOAD CELL");
+    //NSLog(@"LOAD CELL");
     
     static NSString *cellIdentifier = @"Cell";
     
@@ -332,24 +336,43 @@
     cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
-    //cell.textLabel.text = productName;
-    //cell.detailTextLabel.text = prodPrice;
+    
+    //cell.imageView.image = theImage;
+    
+    //UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(225,0,80,45)];
+    //[cell.contentView addSubview:img];
     
     NSLog(@"IndexPath row = %ld and list count = %lu",(long)indexPath.row,(unsigned long)[self.list count]);
     if(indexPath.row < [self.list count]){
         NSDictionary *dictionary = [self.list objectAtIndex:indexPath.row];
-        NSString *productName = [dictionary valueForKey:@"prodName"];
-        NSString *prodPrice = [dictionary valueForKey:@"prodPrice"];
-        NSString * prodDesc = [dictionary valueForKey:@"prodDesc"];
+        NSString *productName = [dictionary valueForKey:@"name"];
+        NSString *prodPrice = [dictionary valueForKey:@"price"];
+        NSString * prodDesc = [dictionary valueForKey:@"desc"];
+        NSString * prodImage = [dictionary valueForKey:@"pic_small"];
+        
+        self.prodImage = [NSString stringWithFormat:@"http://secondstock.by/img_sh/%@",prodImage];
         self.prodDesc = prodDesc;
-        self.prodPrice = prodPrice;
+        self.prodPrice = [NSString stringWithFormat:@"%@ бел.руб.", prodPrice];
         self.productName = productName;
         self.dictionary = dictionary;
         
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+            //Code in background
+            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.prodImage]];
+            UIImage *pic = [UIImage imageWithData:imageData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //code for main thread
+                cell.imageView.image = pic;
+                [cell setNeedsLayout];
+                //[tableView reloadData];
+            });
+         
+        });
         cell.textLabel.text = productName;
-        cell.detailTextLabel.text = prodPrice;
+        cell.detailTextLabel.text = self.prodPrice;
+        
     }else{
-        cell.textLabel.text = @"Add new product";
+        cell.textLabel.text = @"Добавить предмет";
         cell.textLabel.textColor = [UIColor blueColor];
         cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = @"";
@@ -376,7 +399,7 @@
     sectionHeader.font = [UIFont boldSystemFontOfSize:15];
     sectionHeader.textColor = [UIColor brownColor];
     sectionHeader.highlightedTextColor = [UIColor yellowColor];
-    sectionHeader.text = @"Choose the product from this list:";
+    sectionHeader.text = @"Выберите предмет из списка:";
     
     //NSLog(@"Section #%ld name - %@",(long)section, sectionHeader.text);
 
@@ -464,10 +487,10 @@
         
             UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle: @"Delete"
-                              message: @"Do you really want to delete this product?"
+                              message: @"Действительно хотите удалить эту вещь?"
                               delegate: self
-                              cancelButtonTitle: @"Cancel"
-                              otherButtonTitles: @"Of course!", nil];
+                              cancelButtonTitle: @"Нет"
+                              otherButtonTitles: @"Конечно", nil];
             [alert show];
             [alert release];
         
@@ -480,21 +503,8 @@
 	}else if (editingStyle == UITableViewCellEditingStyleInsert){
         
          [tableView beginUpdates];
-        
-        /*
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"Insert"
-                              message: @"Do you really want to insert the product?"
-                              delegate: self
-                              cancelButtonTitle: @"Cancel"
-                              otherButtonTitles: @"Of course!", nil];
-        [alert show];
-        [alert release];
-        */
+
             [self showCreateProductPage];
-            //Insert something into the array, and you can just add a populated NSIndexPath of data or simplr reload data
-            //[self.list addObject:@"I'm a new item!"];        
-            //[tableView reloadData];
         
             [tableView endUpdates];
 
@@ -554,8 +564,7 @@
             [lbl removeFromSuperview];
     }
 
-    //[self jsonParsingCategory:@"http://www.irinap.com/jsonws/categories.php"];
-    [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://natalika.info/jsonws/categories.php"];
+    [NSThread detachNewThreadSelector:@selector(jsonParsingCategory:) toTarget:self withObject:@"http://secondstock.by/json/categories.php"];
     //NSLog(@"%@",self.btnCategory);
     for(UIButton *btn in self.view.subviews){
         if(btn.tag == 0){
@@ -590,8 +599,8 @@
     NSNumber * catId = [NSNumber numberWithInt:someBtn.tag];
     
     [self hideCategoryPage];
-    [self jsonParsingProduct:@"http://natalika.info/jsonws/service.php" withCategoryId:catId];
-    //NSDictionary *extraParams = [NSDictionary dictionaryWithObjectsAndKeys:@"http://www.irinap.com/jsonws/service.php", catId, nil];
+    [self jsonParsingProduct:@"http://secondstock.by/json/service.php" withCategoryId:catId];
+    //NSDictionary *extraParams = [NSDictionary dictionaryWithObjectsAndKeys:@"http://secondstock.by/json/service.php", catId, nil];
     //[NSThread detachNewThreadSelector:@selector(jsonParsingProduct:withCategoryId:) toTarget:self withObject: extraParams];
     //[self.navigationController pushViewController:self.tableView animated:YES];
     [self.view addSubview:self.tableView];
@@ -667,6 +676,9 @@
 }
 
 -(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    //self.indexTitlesArray = [[UILocalizedIndexedCollation currentCollation]sectionIndexTitles];
+    NSArray *indexTitlesArray = [NSArray arrayWithObjects:UITableViewIndexSearch, @"А", @"Б",@"В",@"Г",@"Д",@"Е",@"Ж",@"З",@"И",@"К",@"Л",@"М",@"Н",@"О",@"П",@"Р",@"С",@"Т", @"У", @"Ф", @"Х", @"Ц", @"Ч", @"Ш", @"Щ",@"Э",@"Ю",@"Я", nil];
+    self.indexTitlesArray = indexTitlesArray;
     return self.indexTitlesArray;
 }
 
@@ -680,6 +692,7 @@
     [_indexTitlesArray release];
     [_createCategoryBtn release];
     [_createProductBtn release];
+    [_prodImage release];
     //[_detailVC release];
     
     [super dealloc];

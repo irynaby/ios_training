@@ -36,26 +36,32 @@
     
     self.productName = [[UILabel alloc]init];
     [self.productName setFrame:CGRectMake(10, 80, self.view.frame.size.width, 30)];
-    [self.productName setText:[NSString stringWithFormat:@"Product name is %@", [product valueForKey:@"prodName"]]];
+    [self.productName setText:[NSString stringWithFormat:@"Наименование %@", [product valueForKey:@"name"]]];
     [self.view addSubview: self.productName];
     
     self.prodPrice = [[UILabel alloc]init];
     [self.prodPrice setFrame:CGRectMake(10, self.productName.frame.origin.y + 40, self.view.frame.size.width, 30)];
-    [self.prodPrice setText:[NSString stringWithFormat:@"Price: %@$", [product valueForKey:@"prodPrice"]]];
+    [self.prodPrice setText:[NSString stringWithFormat:@"Цена: %@ бел.руб.", [product valueForKey:@"price"]]];
     [self.view addSubview: self.prodPrice];
     
     self.prodDesc = [[UILabel alloc]init];
     [self.prodDesc setFrame:CGRectMake(10, self.prodPrice.frame.origin.y + 40, self.view.frame.size.width, 100)];
-    [self.prodDesc setText:[NSString stringWithFormat:@"Description: %@", [product valueForKey:@"prodDesc"]]];
+    [self.prodDesc setText:[NSString stringWithFormat:@"Описание: %@", [product valueForKey:@"desc"]]];
     [self.view addSubview: self.prodDesc];
     
+    /*
+    self.prodImage = [[UILabel alloc]init];
+    [self.prodImage setFrame:CGRectMake(10, self.prodPrice.frame.origin.y + 40, self.view.frame.size.width, 100)];
+    [self.prodImage setText:[NSString stringWithFormat:@"Описание: %@", [product valueForKey:@"pic_big"]]];
+    [self.view addSubview: self.prodDesc];
+    */
     //[self createNavBar];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     //set the title of the navigation view
-    [self.navigationItem setTitle:@"Product Detail"];
+    [self.navigationItem setTitle:@"Детали"];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(Back)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Назад" style:UIBarButtonItemStyleBordered target:self action:@selector(Back)];
     self.navigationItem.leftBarButtonItem = backButton;
     
     //self.navigationItem.rightBarButtonItem = self.editButtonItem;

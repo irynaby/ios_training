@@ -86,6 +86,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84EE3BF61945E23300C3D127 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		84F03FC018FEA6860079954E = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +126,7 @@
 		84F03FD218FEA6870079954E /* premium */ = {
 			isa = PBXGroup;
 			children = (
+				84EE3BF61945E23300C3D127 /* Resources */,
 				84F03FFF18FEA7E30079954E /* view */,
 				84F03FFB18FEA6AD0079954E /* controller */,
 				84F03FDB18FEA6870079954E /* AppDelegate.h */,

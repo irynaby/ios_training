@@ -31,11 +31,13 @@
 @property (retain,nonatomic) NSString *productName;
 @property (retain,nonatomic) NSString *prodPrice;
 @property (retain,nonatomic) NSString * prodDesc;
+@property (retain, nonatomic) NSString * prodImage;
 
 @property (retain, nonatomic) NSArray *indexTitlesArray;
 
 @property (retain,nonatomic) UIBarButtonItem *createCategoryBtn;
 @property (retain,nonatomic) UIBarButtonItem *createProductBtn;
+
 
 //@property (retain,nonatomic) UIBarButtonItem *createCategoryBtn;
 //@property (retain,nonatomic) UIBarButtonItem *createProductBtn;
