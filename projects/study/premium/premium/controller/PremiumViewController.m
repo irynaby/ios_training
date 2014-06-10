@@ -23,15 +23,11 @@
 @synthesize text = _text;
 @synthesize list = _list;
 @synthesize tableView = _tableView;
-@synthesize indexTitlesArray = _indexTitlesArray;
-//@synthesize newCategoryBtn = _newCategoryBtn;
 @synthesize createCategoryBtn = _createCategoryBtn;
 @synthesize createProductBtn = _createProductBtn;
-//@synthesize navBar = _navBar;
-
-//@synthesize detailVC = _detailVC;
-
 @synthesize prodImage = _prodImage;
+@synthesize filteredList = _filteredList;
+@synthesize alphabet = _alphabet;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,6 +62,8 @@
     
     //set the title of the navigation view
     [self.navigationItem setTitle:@"МАГАЗИН ОДЕЖДЫ"];
+    
+    
     
 }
 
@@ -205,7 +203,8 @@
     return self.btnCategory;
 }
 
--(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                        duration:(NSTimeInterval)duration{
     
     [self doLayoutForOrientation:toInterfaceOrientation];
     
@@ -281,7 +280,8 @@
     return self.lblProduct;
 }
 */
--(id)createProductLabel:(NSArray *)items withCategoryId:catId{
+-(id)createProductLabel:(NSArray *)items
+     withCategoryId:catId{
     self.list = [[NSMutableArray alloc] init];
     
     int y = 0;
@@ -302,20 +302,44 @@
     }
     //NSLog(@"List items %@",self.list);
     //NSLog(@"Count of lists = %lu",(unsigned long)[self.list count]);
-    return self.list;
+    self.filteredList = [[NSMutableArray alloc] initWithCapacity:[self.list count]];
+    [self.filteredList sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];//will sort array in ascending
+    [self.filteredList addObjectsFromArray:self.list];
+    
+
+    return self.filteredList;
+}
+
+-(NSMutableArray *)createAlphabet {
+    NSMutableArray * alphabet = [[[NSMutableArray alloc] initWithCapacity:0]autorelease];
+    for(int i =0; i <self.filteredList.count; i++) {
+        NSString *firstLetter = [[[self.filteredList objectAtIndex:i] valueForKey:@"name"] substringToIndex:1];//modifying the statement to first letter
+       
+        NSData *data = [firstLetter dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString * newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if(![alphabet containsObject:newStr]){//checking already modified array
+            [alphabet addObject:newStr];
+        }
+    }
+    self.alphabet = alphabet;
+    [self.alphabet sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];//sorting array in ascending
+    //NSLog(@"Alphabet : %@", alphabet);
+    return self.alphabet;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger)section {
+-(NSInteger)tableView:(UITableView *) tableView
+            numberOfRowsInSection:(NSInteger)section {
     //NSLog(@"table view count is %lu", (unsigned long)[self.list count]);
-    if([self.list count] == 0){return 1;}
-    return [self.list count];
+    if([self.filteredList count] == 0){return 1;}
+    return [self.filteredList count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *)tableView:(UITableView *)tableView
+                    cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //NSLog(@"LOAD CELL");
     
     static NSString *cellIdentifier = @"Cell";
@@ -332,8 +356,8 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     NSLog(@"IndexPath row = %ld and list count = %lu",(long)indexPath.row,(unsigned long)[self.list count]);
-    if(indexPath.row < [self.list count]){
-        NSDictionary *dictionary = [self.list objectAtIndex:indexPath.row];
+    if(indexPath.row < [self.filteredList count]){
+        NSDictionary *dictionary = [self.filteredList objectAtIndex:indexPath.row];
         NSString *productName = [dictionary valueForKey:@"name"];
         NSString *prodPrice = [dictionary valueForKey:@"price"];
         NSString * prodDesc = [dictionary valueForKey:@"desc"];
@@ -358,6 +382,7 @@
         });
         cell.textLabel.text = productName;
         cell.detailTextLabel.text = self.prodPrice;
+        //[self createAlphabet];
         
     }else{
         cell.textLabel.text = @"Добавить предмет";
@@ -378,7 +403,8 @@
     return cell;
 }
 
--(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+-(UIView *) tableView:(UITableView *)tableView
+            viewForHeaderInSection:(NSInteger)section {
     //NSLog(@"Calling view for header");
     //create label
     UILabel *sectionHeader = [[[UILabel alloc] initWithFrame:CGRectZero]autorelease];
@@ -398,7 +424,8 @@
     return sectionHeader;
 }
 
--(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+-(CGFloat) tableView:(UITableView *)tableView
+           heightForHeaderInSection:(NSInteger)section {
     return 30;
 }
 /*
@@ -444,7 +471,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     ProductDetailViewController *detailVC = [[[ProductDetailViewController alloc]init] autorelease];
-    detailVC.product = [self.list objectAtIndex:indexPath.row];
+    detailVC.product = [self.filteredList objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:detailVC animated:YES];
     //[self presentViewController:detailVC animated:YES completion:nil];
 }
@@ -456,7 +483,8 @@
     [self.tableView reloadData];
 }
 
--(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath: (NSIndexPath *)indexPath {
+-(BOOL)tableView:(UITableView *)tableView
+       canEditRowAtIndexPath: (NSIndexPath *)indexPath {
     //NSLog(@"Can edit row in section %ld",(long)indexPath.section);
     /*
     if (indexPath.section == 0) {
@@ -466,7 +494,9 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView
+        commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+        forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         [tableView beginUpdates];
@@ -481,7 +511,7 @@
             [alert release];
              */
             //Delete the row from the dataSource
-        	[self.list removeObjectAtIndex:indexPath.row];
+        	[self.filteredList removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [tableView endUpdates];
 
@@ -501,31 +531,31 @@
 }
 */
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
-           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+                               editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row < [self.list count]){
+    if(indexPath.row < [self.filteredList count]){
         return UITableViewCellEditingStyleDelete;
     }
     return UITableViewCellEditingStyleInsert;
 }
 
 - (BOOL)tableView:(UITableView *)tableView
-    shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+        shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return NO;
 }
 
 -(void)tableView:(UITableView *)tableView
-    moveRowAtIndexPath: (NSIndexPath *)sourceIndexPath
-     toIndexPath:(NSIndexPath *)destinationIndexPath {
+       moveRowAtIndexPath: (NSIndexPath *)sourceIndexPath
+       toIndexPath:(NSIndexPath *)destinationIndexPath {
     
-    [self.list insertObject: [self.list objectAtIndex:sourceIndexPath.row] atIndex:destinationIndexPath.row];
-    [self.list removeObjectAtIndex:(sourceIndexPath.row + 1)];
+    [self.filteredList insertObject: [self.filteredList objectAtIndex:sourceIndexPath.row] atIndex:destinationIndexPath.row];
+    [self.filteredList removeObjectAtIndex:(sourceIndexPath.row + 1)];
     
 }
 
 -(BOOL)tableView:(UITableView *)tableView
-    canMoveRowAtIndexPath: (NSIndexPath *)indexPath {
+       canMoveRowAtIndexPath: (NSIndexPath *)indexPath {
     NSLog(@"Can move row at indexPath %ld", (long)indexPath.row);
     
     //Don't move the first row
@@ -537,9 +567,10 @@
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView
-      targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
-      toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
-    if (proposedDestinationIndexPath.row == [self.list count]) {
+                targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+                toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+    
+    if (proposedDestinationIndexPath.row == [self.filteredList count]) {
         return sourceIndexPath;
     }
     
@@ -665,11 +696,23 @@
 }
 
 -(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    //self.indexTitlesArray = [[UILocalizedIndexedCollation currentCollation]sectionIndexTitles];
-    NSArray *indexTitlesArray = [NSArray arrayWithObjects:UITableViewIndexSearch, @"А", @"Б",@"В",@"Г",@"Д",@"Е",@"Ж",@"З",@"И",@"К",@"Л",@"М",@"Н",@"О",@"П",@"Р",@"С",@"Т", @"У", @"Ф", @"Х", @"Ц", @"Ч", @"Ш", @"Щ",@"Э",@"Ю",@"Я", nil];
-    self.indexTitlesArray = indexTitlesArray;
-    return self.indexTitlesArray;
+    [self createAlphabet];
+    return self.alphabet;
 }
+
+
+/*
+//return the index for the given section title
+-(NSInteger)tableView:(UITableView *)tableView
+            sectionForSectionIndexTitle:(NSString *)title
+            atIndex:(NSInteger)index {
+    
+    
+    if([self.filteredList count] > 0) {
+        NSDictionary
+    }else {}
+}
+*/
 
 -(void)dealloc{
     [_btnCategory release];
@@ -678,11 +721,11 @@
     [_text release];
     [_list release];
     [_tableView release];
-    [_indexTitlesArray release];
     [_createCategoryBtn release];
     [_createProductBtn release];
     [_prodImage release];
-    //[_detailVC release];
+    [_filteredList release];
+    [_alphabet release];
     
     [super dealloc];
 }

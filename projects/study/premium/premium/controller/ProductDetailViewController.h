@@ -18,4 +18,5 @@
 
 -(void)showDetailPage;
 -(void)Back;
+
 @end

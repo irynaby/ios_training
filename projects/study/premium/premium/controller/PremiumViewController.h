@@ -33,11 +33,11 @@
 @property (retain,nonatomic) NSString * prodDesc;
 @property (retain, nonatomic) NSString * prodImage;
 
-@property (retain, nonatomic) NSArray *indexTitlesArray;
-
 @property (retain,nonatomic) UIBarButtonItem *createCategoryBtn;
 @property (retain,nonatomic) UIBarButtonItem *createProductBtn;
 
+@property (retain,nonatomic) NSMutableArray *filteredList;
+@property (retain,nonatomic) NSMutableArray * alphabet;
 
 //@property (retain,nonatomic) UIBarButtonItem *createCategoryBtn;
 //@property (retain,nonatomic) UIBarButtonItem *createProductBtn;
@@ -80,5 +80,7 @@
 
 - (void) tableView: (UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndex toIndexPath:(NSIndexPath *)toIndex;
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath: (NSIndexPath *)indexPath;
+
+-(NSMutableArray *)createAlphabet;
 
 @end

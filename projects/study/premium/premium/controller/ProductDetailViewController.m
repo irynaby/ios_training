@@ -34,15 +34,12 @@
     NSLog(@"Product detail view is loading.... ");
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self showDetailPage];
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     //set the title of the navigation view
     [self.navigationItem setTitle:@"Детали"];
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Назад" style:UIBarButtonItemStyleBordered target:self action:@selector(Back)];
     self.navigationItem.leftBarButtonItem = backButton;
-    
-    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = nil;
 }
 
@@ -73,16 +70,18 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             //code for main thread
             UIImageView *imageView = [[[UIImageView alloc] initWithImage:pic] autorelease];
+            
             [imageView setFrame:CGRectMake(30, 80, self.view.frame.size.width/4, self.view.frame.size.height/4)];
             [self.view addSubview: imageView];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;            
         });
-        
     });
 }
 
 -(void)Back {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
