@@ -14,6 +14,7 @@
 
 @property (nonatomic,retain) PremiumViewController *product;
 @property (nonatomic, retain) UILabel *productName, *prodPrice, *prodDesc;
+@property (nonatomic, retain) NSString *prodImage;
 
 -(void)Back;
 @end

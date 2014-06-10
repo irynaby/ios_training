@@ -193,9 +193,7 @@
         NSString *categoryName = [item valueForKey:@"secname"];
         
            [btn setTitle:categoryName forState:UIControlStateNormal];
-            [btn setTag: [catId intValue]];
-        
-        
+           [btn setTag: [catId intValue]];
         
         btn.frame = CGRectMake( self.view.frame.size.width/4, 120*i*0.5+70, self.view.frame.size.width/2, 30);
         self.btnCategory = btn;
@@ -211,7 +209,7 @@
     
     [self doLayoutForOrientation:toInterfaceOrientation];
     
-    }
+}
 
 -(void) doLayoutForOrientation:(UIInterfaceOrientation)orientaion {
     if (UIInterfaceOrientationIsPortrait(orientaion)) {
@@ -312,9 +310,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger)section {
-    
     //NSLog(@"table view count is %lu", (unsigned long)[self.list count]);
-    //NSInteger count = [self.list count];
     if([self.list count] == 0){return 1;}
     return [self.list count];
 }
@@ -328,19 +324,12 @@
     
     if(cell == nil){
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier]autorelease];
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
     cell.textLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    
-    //cell.imageView.image = theImage;
-    
-    //UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(225,0,80,45)];
-    //[cell.contentView addSubview:img];
     
     NSLog(@"IndexPath row = %ld and list count = %lu",(long)indexPath.row,(unsigned long)[self.list count]);
     if(indexPath.row < [self.list count]){
@@ -364,7 +353,6 @@
                 //code for main thread
                 cell.imageView.image = pic;
                 [cell setNeedsLayout];
-                //[tableView reloadData];
             });
          
         });
@@ -451,8 +439,6 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    //NSDictionary *dictionary = [self.list objectAtIndex:indexPath.row];
     //NSLog(@"didSelectRowAtIndexPath call - %@",dictionary);
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -464,7 +450,7 @@
 }
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    NSLog(@"Set edit mode for table!");
+    //NSLog(@"Set edit mode for table!");
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:animated];
     [self.tableView reloadData];
@@ -484,7 +470,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         [tableView beginUpdates];
-        
+            /*
             UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle: @"Delete"
                               message: @"Действительно хотите удалить эту вещь?"
@@ -493,24 +479,27 @@
                               otherButtonTitles: @"Конечно", nil];
             [alert show];
             [alert release];
-        
+             */
             //Delete the row from the dataSource
-            [self.list removeObjectAtIndex:indexPath.row];
+        	[self.list removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
         [tableView endUpdates];
 
 	}else if (editingStyle == UITableViewCellEditingStyleInsert){
         
          [tableView beginUpdates];
-
             [self showCreateProductPage];
-        
-            [tableView endUpdates];
-
+         [tableView endUpdates];    }
+}
+/*
+-(void) alertView: (UIAlertView *) alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 0) {
+        NSLog(@"Cliked button No");
+    }else if(buttonIndex == 1) {
+        NSLog(@"Clicked button Yes");
     }
 }
-
+*/
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
            editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {

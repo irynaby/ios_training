@@ -15,8 +15,8 @@
 
 @implementation ProductDetailViewController
 
-@synthesize product;
-@synthesize productName, prodPrice, prodDesc;
+@synthesize product = _product;
+@synthesize productName = _productName, prodPrice = _prodPrice, prodDesc = _prodDesc, prodImage = _prodImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,26 +35,36 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     self.productName = [[UILabel alloc]init];
-    [self.productName setFrame:CGRectMake(10, 80, self.view.frame.size.width, 30)];
-    [self.productName setText:[NSString stringWithFormat:@"Наименование %@", [product valueForKey:@"name"]]];
+    [self.productName setFrame:CGRectMake(self.view.frame.size.width/4 + 50, 80, self.view.frame.size.width, 30)];
+    [self.productName setText:[NSString stringWithFormat:@"Наименование %@", [self.product valueForKey:@"name"]]];
     [self.view addSubview: self.productName];
     
     self.prodPrice = [[UILabel alloc]init];
-    [self.prodPrice setFrame:CGRectMake(10, self.productName.frame.origin.y + 40, self.view.frame.size.width, 30)];
-    [self.prodPrice setText:[NSString stringWithFormat:@"Цена: %@ бел.руб.", [product valueForKey:@"price"]]];
+    [self.prodPrice setFrame:CGRectMake(self.view.frame.size.width/4 + 50, self.productName.frame.origin.y + 40, self.view.frame.size.width, 30)];
+    [self.prodPrice setText:[NSString stringWithFormat:@"Цена: %@ бел.руб.", [self.product valueForKey:@"price"]]];
     [self.view addSubview: self.prodPrice];
     
     self.prodDesc = [[UILabel alloc]init];
-    [self.prodDesc setFrame:CGRectMake(10, self.prodPrice.frame.origin.y + 40, self.view.frame.size.width, 100)];
-    [self.prodDesc setText:[NSString stringWithFormat:@"Описание: %@", [product valueForKey:@"desc"]]];
+    [self.prodDesc setFrame:CGRectMake(self.view.frame.size.width/4 + 50, self.prodPrice.frame.origin.y + 40, self.view.frame.size.width, 100)];
+    [self.prodDesc setText:[NSString stringWithFormat:@"Описание: %@", [self.product valueForKey:@"desc"]]];
     [self.view addSubview: self.prodDesc];
     
-    /*
-    self.prodImage = [[UILabel alloc]init];
-    [self.prodImage setFrame:CGRectMake(10, self.prodPrice.frame.origin.y + 40, self.view.frame.size.width, 100)];
-    [self.prodImage setText:[NSString stringWithFormat:@"Описание: %@", [product valueForKey:@"pic_big"]]];
-    [self.view addSubview: self.prodDesc];
-    */
+    NSString * prodImage = [self.product valueForKey:@"pic_big"];
+    self.prodImage = [NSString stringWithFormat:@"http://secondstock.by/img_sh/%@",prodImage];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+        //Code in background
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: self.prodImage]];
+        UIImage *pic = [UIImage imageWithData:imageData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //code for main thread
+            UIImageView *imageView = [[[UIImageView alloc] initWithImage:pic] autorelease];
+            [imageView setFrame:CGRectMake(30, 80, self.view.frame.size.width/4, self.view.frame.size.height/4)];
+            [self.view addSubview: imageView];
+        });
+        
+    });
+    
     //[self createNavBar];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
@@ -68,6 +78,7 @@
     self.navigationItem.rightBarButtonItem = nil;
 }
 
+
 -(void)Back {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -79,10 +90,11 @@
 }
 
 -(void)dealloc {
-    [product release];
-    [productName release];
-    [prodPrice release];
-    [prodDesc release];
+    [_product release];
+    [_productName release];
+    [_prodPrice release];
+    [_prodDesc release];
+    [_prodImage release];
    // [navigationController release];
     [super dealloc];
 }

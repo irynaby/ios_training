@@ -38,7 +38,7 @@
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:224/255.0f green:155/255.0f blue:43/255.0f alpha:1.0f]];
     
     //changing the font of nav bar title
-    NSShadow *shadow = [[NSShadow alloc] init];
+    NSShadow *shadow = [[[NSShadow alloc] init]autorelease];
     shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
     shadow.shadowOffset = CGSizeMake(0, 1);
     [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
