@@ -16,5 +16,6 @@
 @property (nonatomic, retain) UILabel *productName, *prodPrice, *prodDesc;
 @property (nonatomic, retain) NSString *prodImage;
 
+-(void)showDetailPage;
 -(void)Back;
 @end

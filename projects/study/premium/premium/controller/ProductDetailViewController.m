@@ -33,6 +33,20 @@
     
     NSLog(@"Product detail view is loading.... ");
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self showDetailPage];
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    //set the title of the navigation view
+    [self.navigationItem setTitle:@"Детали"];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Назад" style:UIBarButtonItemStyleBordered target:self action:@selector(Back)];
+    self.navigationItem.leftBarButtonItem = backButton;
+    
+    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = nil;
+}
+
+-(void)showDetailPage{
     
     self.productName = [[UILabel alloc]init];
     [self.productName setFrame:CGRectMake(self.view.frame.size.width/4 + 50, 80, self.view.frame.size.width, 30)];
@@ -51,7 +65,7 @@
     
     NSString * prodImage = [self.product valueForKey:@"pic_big"];
     self.prodImage = [NSString stringWithFormat:@"http://secondstock.by/img_sh/%@",prodImage];
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
         //Code in background
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: self.prodImage]];
@@ -64,20 +78,7 @@
         });
         
     });
-    
-    //[self createNavBar];
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    //set the title of the navigation view
-    [self.navigationItem setTitle:@"Детали"];
-    
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Назад" style:UIBarButtonItemStyleBordered target:self action:@selector(Back)];
-    self.navigationItem.leftBarButtonItem = backButton;
-    
-    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.navigationItem.rightBarButtonItem = nil;
 }
-
 
 -(void)Back {
     [self.navigationController popViewControllerAnimated:YES];
