@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "PremiumViewController.h"
-#import "CreateCategoryViewController.h"
+#import "AboutViewController.h"
+#import "CartViewController.h"
 
 //@synthesize window, navController, premiumController;
 
@@ -50,13 +51,48 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     //set the navConntroller property
-    [self setNavController:nav];
+    //[self setNavController:nav];
+    //[self.window addSubview:[nav view]];
     
-    //release nav controller
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    AboutViewController *aboutContr = [[AboutViewController alloc]init];
+    CartViewController *cartContr = [[CartViewController alloc]init];
+    
+    NSArray *controllers = [NSArray arrayWithObjects: self.premiumController, aboutContr, cartContr, nil];
+    
+    tabBarController.viewControllers = controllers;
+    
+    [tabBarController.tabBar setBackgroundColor:[UIColor brownColor]];
+    
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor blackColor] }
+                                             forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor brownColor] }
+                                             forState:UIControlStateSelected];
+    
+    //[self.window addSubview:[tabBarController view]];
+    self.window.rootViewController = tabBarController;
+    
+    UIImage *img1 = [UIImage imageNamed:@"list.png"];
+    img1 =[img1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.premiumController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Категории" image:img1 tag:0];
+    self.premiumController.tabBarItem.badgeValue = @"7";
+    
+    UIImage *img2 = [UIImage imageNamed:@"contacts.png"];
+    img2 =[img2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    aboutContr.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Контакты" image:img2 tag:1];
+    
+    UIImage *img3 = [UIImage imageNamed:@"cart.png"];
+    img3 =[img3 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    cartContr.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Корзина" image:img3 tag:2];
+    cartContr.tabBarItem.badgeValue = @"0";
+    
+    //set the navConntroller property
+    //[self setNavController:nav];
+    //[self.window addSubview:[nav view]];
+    
+    //release
     [nav release];
-    
-    [self.window addSubview:[nav view]];
-    
+    [tabBarController release];
     return YES;
 }
 

@@ -10,6 +10,15 @@
 		84089E5019092E4600AD2522 /* CreateCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84089E4F19092E4600AD2522 /* CreateCategoryViewController.m */; };
 		8498BC7B191B9FAA0040EE03 /* CreateProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8498BC7A191B9FAA0040EE03 /* CreateProductViewController.m */; };
 		849966CD19336D430053C2BE /* ProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849966CC19336D430053C2BE /* ProductDetailViewController.m */; };
+		84A2305819583F1F002215EE /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A2305719583F1F002215EE /* AboutViewController.m */; };
+		84A230701959A992002215EE /* cart.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A230691959A992002215EE /* cart.png */; };
+		84A230711959A992002215EE /* contacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A2306A1959A992002215EE /* contacts.png */; };
+		84A230721959A992002215EE /* create_category.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A2306B1959A992002215EE /* create_category.png */; };
+		84A230731959A992002215EE /* create_product.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A2306C1959A992002215EE /* create_product.png */; };
+		84A230741959A992002215EE /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A2306D1959A992002215EE /* list.png */; };
+		84A230751959A992002215EE /* main.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A2306E1959A992002215EE /* main.png */; };
+		84A230761959A992002215EE /* orders.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A2306F1959A992002215EE /* orders.png */; };
+		84A230791959B978002215EE /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A230781959B978002215EE /* CartViewController.m */; };
 		84F03FCD18FEA6870079954E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F03FCC18FEA6870079954E /* Foundation.framework */; };
 		84F03FCF18FEA6870079954E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F03FCE18FEA6870079954E /* CoreGraphics.framework */; };
 		84F03FD118FEA6870079954E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F03FD018FEA6870079954E /* UIKit.framework */; };
@@ -42,6 +51,17 @@
 		8498BC7A191B9FAA0040EE03 /* CreateProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProductViewController.m; sourceTree = "<group>"; };
 		849966CB19336D430053C2BE /* ProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailViewController.h; sourceTree = "<group>"; };
 		849966CC19336D430053C2BE /* ProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailViewController.m; sourceTree = "<group>"; };
+		84A2305619583F1F002215EE /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		84A2305719583F1F002215EE /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		84A230691959A992002215EE /* cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cart.png; path = "../../../../../../Downloads/documents-export-2014-06-24 1/cart.png"; sourceTree = "<group>"; };
+		84A2306A1959A992002215EE /* contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = contacts.png; path = "../../../../../../Downloads/documents-export-2014-06-24 1/contacts.png"; sourceTree = "<group>"; };
+		84A2306B1959A992002215EE /* create_category.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = create_category.png; path = "../../../../../../Downloads/documents-export-2014-06-24 1/create_category.png"; sourceTree = "<group>"; };
+		84A2306C1959A992002215EE /* create_product.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = create_product.png; path = "../../../../../../Downloads/documents-export-2014-06-24 1/create_product.png"; sourceTree = "<group>"; };
+		84A2306D1959A992002215EE /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = list.png; path = "../../../../../../Downloads/documents-export-2014-06-24 1/list.png"; sourceTree = "<group>"; };
+		84A2306E1959A992002215EE /* main.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = main.png; path = "../../../../../../Downloads/documents-export-2014-06-24 1/main.png"; sourceTree = "<group>"; };
+		84A2306F1959A992002215EE /* orders.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = orders.png; path = "../../../../../../Downloads/documents-export-2014-06-24 1/orders.png"; sourceTree = "<group>"; };
+		84A230771959B978002215EE /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
+		84A230781959B978002215EE /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
 		84F03FC918FEA6870079954E /* premium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = premium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F03FCC18FEA6870079954E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84F03FCE18FEA6870079954E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -89,6 +109,13 @@
 		84EE3BF61945E23300C3D127 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84A230691959A992002215EE /* cart.png */,
+				84A2306A1959A992002215EE /* contacts.png */,
+				84A2306B1959A992002215EE /* create_category.png */,
+				84A2306C1959A992002215EE /* create_product.png */,
+				84A2306D1959A992002215EE /* list.png */,
+				84A2306E1959A992002215EE /* main.png */,
+				84A2306F1959A992002215EE /* orders.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -177,6 +204,10 @@
 				8498BC7A191B9FAA0040EE03 /* CreateProductViewController.m */,
 				849966CB19336D430053C2BE /* ProductDetailViewController.h */,
 				849966CC19336D430053C2BE /* ProductDetailViewController.m */,
+				84A2305619583F1F002215EE /* AboutViewController.h */,
+				84A2305719583F1F002215EE /* AboutViewController.m */,
+				84A230771959B978002215EE /* CartViewController.h */,
+				84A230781959B978002215EE /* CartViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -263,8 +294,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A230751959A992002215EE /* main.png in Resources */,
+				84A230741959A992002215EE /* list.png in Resources */,
+				84A230761959A992002215EE /* orders.png in Resources */,
 				84F03FD718FEA6870079954E /* InfoPlist.strings in Resources */,
+				84A230731959A992002215EE /* create_product.png in Resources */,
 				84F03FDF18FEA6870079954E /* Images.xcassets in Resources */,
+				84A230711959A992002215EE /* contacts.png in Resources */,
+				84A230701959A992002215EE /* cart.png in Resources */,
+				84A230721959A992002215EE /* create_category.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,9 +321,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A230791959B978002215EE /* CartViewController.m in Sources */,
 				8498BC7B191B9FAA0040EE03 /* CreateProductViewController.m in Sources */,
 				84F03FDD18FEA6870079954E /* AppDelegate.m in Sources */,
 				84F03FFE18FEA7DD0079954E /* PremiumViewController.m in Sources */,
+				84A2305819583F1F002215EE /* AboutViewController.m in Sources */,
 				849966CD19336D430053C2BE /* ProductDetailViewController.m in Sources */,
 				84089E5019092E4600AD2522 /* CreateCategoryViewController.m in Sources */,
 				84F03FD918FEA6870079954E /* main.m in Sources */,

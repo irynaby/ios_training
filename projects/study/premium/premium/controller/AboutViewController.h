@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PremiumViewController.h"
 
 @interface AboutViewController : UIViewController
+
+@property (retain, nonatomic) UILabel *aboutTitleLabel;
+@property (retain, nonatomic) UILabel *aboutTextLabel;
+@property (retain, nonatomic) UITextField *textField;
+@property (retain, nonatomic) UIButton *sendEmailBtn;
+@property (retain, nonatomic) UIButton *cancelBtn;
+
+-(void) setupEmailForm;
+-(void)setupSendBtn;
+-(void)setupTextField;
+-(void)setupCancelBtn;
 
 @end

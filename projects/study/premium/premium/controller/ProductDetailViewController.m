@@ -48,6 +48,7 @@
     self.productName = [[UILabel alloc]init];
     [self.productName setFrame:CGRectMake(self.view.frame.size.width/4 + 50, 80, self.view.frame.size.width, 30)];
     [self.productName setText:[NSString stringWithFormat:@"Наименование %@", [self.product valueForKey:@"name"]]];
+    self.productName.lineBreakMode = NSLineBreakByWordWrapping;
     [self.view addSubview: self.productName];
     
     self.prodPrice = [[UILabel alloc]init];
@@ -58,6 +59,7 @@
     self.prodDesc = [[UILabel alloc]init];
     [self.prodDesc setFrame:CGRectMake(self.view.frame.size.width/4 + 50, self.prodPrice.frame.origin.y + 40, self.view.frame.size.width, 100)];
     [self.prodDesc setText:[NSString stringWithFormat:@"Описание: %@", [self.product valueForKey:@"desc"]]];
+    self.prodDesc.lineBreakMode = NSLineBreakByWordWrapping;
     [self.view addSubview: self.prodDesc];
     
     NSString * prodImage = [self.product valueForKey:@"pic_big"];

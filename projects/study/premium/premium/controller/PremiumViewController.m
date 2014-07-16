@@ -10,6 +10,7 @@
 #import "CreateCategoryViewController.h"
 #import "CreateProductViewController.h"
 #import "ProductDetailViewController.h"
+#import "AboutViewController.h"
 
 @interface PremiumViewController ()
     @property (retain) NSMutableArray* LCCategories;
@@ -28,6 +29,9 @@
 @synthesize prodImage = _prodImage;
 @synthesize filteredList = _filteredList;
 @synthesize alphabet = _alphabet;
+@synthesize titleAlph = _titleAlph;
+@synthesize rowContainer = _rowContainer;
+@synthesize titleToBeDisplayed = _titleToBeDisplayed;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,9 +66,6 @@
     
     //set the title of the navigation view
     [self.navigationItem setTitle:@"МАГАЗИН ОДЕЖДЫ"];
-    
-    
-    
 }
 
 -(id) createCategoryBtnItem {
@@ -109,6 +110,12 @@
     CreateCategoryViewController *createCategoryVC = [[[CreateCategoryViewController alloc] init] autorelease];
     [self.navigationController pushViewController:createCategoryVC animated:YES];
     //[self presentViewController:createCategoryVC animated:YES completion:nil];
+    if([self.btnCategory.currentTitle isEqualToString: @"РЕКЛАМА"]) {
+        //self.btnCategory.hidden = YES;
+        [self.btnCategory setTag:5];
+        NSLog(@" btnCategory %@", self.btnCategory);
+        [(UIButton *)[self.view viewWithTag:5] removeFromSuperview];
+    }
 }
 
 -(void)showCreateProductPage{
@@ -193,12 +200,18 @@
            [btn setTitle:categoryName forState:UIControlStateNormal];
            [btn setTag: [catId intValue]];
         
+        
         btn.frame = CGRectMake( self.view.frame.size.width/4, 120*i*0.5+70, self.view.frame.size.width/2, 30);
         self.btnCategory = btn;
+        
+        
+
+        
         self.btnCategory.hidden = FALSE;
         
         [self.view addSubview:self.btnCategory];        
     }
+    
     
     return self.btnCategory;
 }
@@ -288,13 +301,13 @@
     for(int i=0; i < [items count]; i++) {
         
         NSDictionary *item = [[items objectAtIndex:i] objectForKey:@"item"];
-        
         NSNumber *prodCatId = [NSNumber numberWithInt:[[item valueForKey:@"secid"] intValue]];
         //NSString *productName = [item valueForKey:@"prodName"];
         //NSDecimalNumber *prodPrice = [NSDecimalNumber decimalNumberWithString:[item valueForKey:@"prodPrice"]];
         //NSString * prodDesc = [item valueForKey:@"prodDesc"];
         
         if (catId == prodCatId) {
+            
             [self.list addObject:item];
             y++;
         }
@@ -304,8 +317,7 @@
     //NSLog(@"Count of lists = %lu",(unsigned long)[self.list count]);
     self.filteredList = [[NSMutableArray alloc] initWithCapacity:[self.list count]];
     [self.filteredList sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];//will sort array in ascending
-    [self.filteredList addObjectsFromArray:self.list];
-    
+    [self.filteredList addObjectsFromArray:self.list];    
 
     return self.filteredList;
 }
@@ -331,10 +343,32 @@
     return 1;
 }
 
+-(NSMutableArray *) getArrayOfRowsForSection: (NSInteger)section {
+    NSString *rowTitle;
+    NSString *sectionTitle;
+    NSMutableArray * rowContainer = [[[NSMutableArray alloc]initWithCapacity:0]autorelease];
+    for (int i = 0; i < self.alphabet.count; i++) {
+        if(section == i){//check right section
+            sectionTitle = [self.alphabet objectAtIndex:i];//get section title
+            
+            for(NSString *title in [self.filteredList valueForKey:@"name"]) {
+                rowTitle = [title substringToIndex:1];//for first alphabet
+                
+                if([rowTitle isEqualToString:sectionTitle]){
+                    [rowContainer addObject:title];
+                }
+            }            
+        }
+    }
+    self.rowContainer = rowContainer;
+    return self.rowContainer;
+}
+
 -(NSInteger)tableView:(UITableView *) tableView
             numberOfRowsInSection:(NSInteger)section {
-    //NSLog(@"table view count is %lu", (unsigned long)[self.list count]);
-    if([self.filteredList count] == 0){return 1;}
+    NSLog(@"table view count is %lu", (unsigned long)[self.rowContainer count]);
+    self.rowContainer = [self getArrayOfRowsForSection:section];
+    //if([self.rowContainer count] == 0){return 1;}
     return [self.filteredList count];
 }
 
@@ -354,8 +388,12 @@
     cell.textLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    NSLog(@"IndexPath row = %ld and list count = %lu",(long)indexPath.row,(unsigned long)[self.list count]);
+    /*
+    cell.textLabel.text = [self titleForRow:indexPath];
+    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping; //enabling word wraping of text
+    cell.textLabel.numberOfLines = 0;
+    */
+    //NSLog(@"IndexPath row = %ld and list count = %lu",(long)indexPath.row,(unsigned long)[self.list count]);
     if(indexPath.row < [self.filteredList count]){
         NSDictionary *dictionary = [self.filteredList objectAtIndex:indexPath.row];
         NSString *productName = [dictionary valueForKey:@"name"];
@@ -380,7 +418,10 @@
             });
          
         });
-        cell.textLabel.text = productName;
+        cell.textLabel.text = [self titleForRow:indexPath];
+        NSLog(@"cell.textLabel.text %@", cell.textLabel.text);
+        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping; //enabling word wraping of text
+        //cell.textLabel.text = productName;
         cell.detailTextLabel.text = self.prodPrice;
         //[self createAlphabet];
         
@@ -402,7 +443,7 @@
     
     return cell;
 }
-
+/*
 -(UIView *) tableView:(UITableView *)tableView
             viewForHeaderInSection:(NSInteger)section {
     //NSLog(@"Calling view for header");
@@ -423,7 +464,7 @@
     //[headerView addSubview:sectionHeader];
     return sectionHeader;
 }
-
+*/
 -(CGFloat) tableView:(UITableView *)tableView
            heightForHeaderInSection:(NSInteger)section {
     return 30;
@@ -461,11 +502,13 @@
     
 }
 */
--(void) tableView: (UITableView *) tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+-(void) tableView: (UITableView *) tableView
+        accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     [self tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView
+       didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //NSLog(@"didSelectRowAtIndexPath call - %@",dictionary);
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -556,7 +599,7 @@
 
 -(BOOL)tableView:(UITableView *)tableView
        canMoveRowAtIndexPath: (NSIndexPath *)indexPath {
-    NSLog(@"Can move row at indexPath %ld", (long)indexPath.row);
+    //NSLog(@"Can move row at indexPath %ld", (long)indexPath.row);
     
     //Don't move the first row
     if (indexPath.row == 0) {
@@ -635,8 +678,8 @@
 
 -(id)jsonParsingCategory:url{
     @autoreleasepool {
-        
         NSData *responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        
         NSError *err = nil;
         id result = nil;
     
@@ -688,9 +731,7 @@
                     
                 }
             }
-        
         }
-    
         return result;
     }
 }
@@ -700,6 +741,30 @@
     return self.alphabet;
 }
 
+-(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    //to set title for each section
+    NSString * titleAlph;
+    
+    for(int i = 0; i < self.alphabet.count; i++) {
+        if(section == i){
+            titleAlph = [self.alphabet objectAtIndex:i];
+        }
+    }
+    self.titleAlph = titleAlph;
+    return self.titleAlph;
+}
+
+-(NSString *)titleForRow:(NSIndexPath *)indexpath {
+    //NSMutableArray *rowArray = [[NSMutableArray alloc] initWithCapacity:0];
+    //rowArray = [self getArrayOfRowsForSection:indexpath.section];
+
+    [self getArrayOfRowsForSection:indexpath.section];
+    NSString * titleToBeDisplayed = [self.rowContainer objectAtIndex:indexpath.section];
+    NSLog(@"Title for row is %@ for %ld",titleToBeDisplayed, (long)indexpath.section);
+    self.titleToBeDisplayed = titleToBeDisplayed;
+
+    return self.titleToBeDisplayed;
+}
 
 /*
 //return the index for the given section title
@@ -708,9 +773,7 @@
             atIndex:(NSInteger)index {
     
     
-    if([self.filteredList count] > 0) {
-        NSDictionary
-    }else {}
+    return [self.rowContainer indexOfObject:title];
 }
 */
 
@@ -726,6 +789,9 @@
     [_prodImage release];
     [_filteredList release];
     [_alphabet release];
+    [_titleAlph release];
+    [_rowContainer release];
+    [_titleToBeDisplayed release];
     
     [super dealloc];
 }

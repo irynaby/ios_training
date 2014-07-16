@@ -38,6 +38,10 @@
 
 @property (retain,nonatomic) NSMutableArray *filteredList;
 @property (retain,nonatomic) NSMutableArray * alphabet;
+@property (retain,nonatomic) NSString *titleAlph;
+
+@property (retain, nonatomic) NSMutableArray *rowContainer;
+@property (retain, nonatomic) NSString * titleToBeDisplayed;
 
 //@property (retain,nonatomic) UIBarButtonItem *createCategoryBtn;
 //@property (retain,nonatomic) UIBarButtonItem *createProductBtn;
@@ -71,7 +75,7 @@
 -(NSInteger)tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger)section;
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
--(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;
+//-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;
 -(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 -(void) tableView: (UITableView *) tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath;
@@ -82,5 +86,8 @@
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath: (NSIndexPath *)indexPath;
 
 -(NSMutableArray *)createAlphabet;
+-(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
+-(NSMutableArray *) getArrayOfRowsForSection: (NSInteger)section;
+-(NSString *)titleForRow:(NSIndexPath *)indexpath;
 
 @end
